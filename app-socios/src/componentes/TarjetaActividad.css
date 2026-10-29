@@ -1,0 +1,59 @@
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid var(--borde);
+  border-top: 4px solid var(--verde);
+  border-radius: var(--radio);
+  background-color: var(--superficie);
+}
+
+.tarjeta-nombre {
+  margin: 2px 0 12px;
+  font-size: 1.2rem;
+}
+
+.tarjeta-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.925rem;
+  color: var(--texto-suave);
+}
+
+/* margin-top: auto empuja el precio y el botón al fondo para que las tarjetas queden parejas */
+.tarjeta-precio {
+  margin: auto 0 16px;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.tarjeta-precio span {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--texto-suave);
+}
+
+.tarjeta-pie {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Clase que se agrega cuando la actividad no tiene cupo: la tarjeta se ve gris */
+.tarjeta.sin-cupo {
+  border-top-color: var(--gris);
+  background-color: var(--gris-claro);
+  color: var(--texto-suave);
+}
+
+.tarjeta.sin-cupo .disciplina,
+.tarjeta.sin-cupo .tarjeta-nombre,
+.tarjeta.sin-cupo .tarjeta-precio {
+  color: var(--gris);
+}

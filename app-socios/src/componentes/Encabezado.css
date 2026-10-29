@@ -1,0 +1,92 @@
+.encabezado {
+  background-color: var(--verde);
+  color: #fff;
+}
+
+.encabezado-contenido {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 14px 16px;
+}
+
+.marca {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.marca-titulo {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.marca-subtitulo {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.navegacion {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+}
+
+.navegacion a {
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.navegacion a:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  opacity: 1;
+}
+
+/* NavLink agrega la clase "active" al enlace de la página actual */
+.navegacion a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  opacity: 1;
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.boton-salir {
+  font: inherit;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.boton-salir:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 600px) {
+  .encabezado-contenido {
+    gap: 12px;
+  }
+
+  .navegacion {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .usuario {
+    margin-left: auto;
+  }
+}
