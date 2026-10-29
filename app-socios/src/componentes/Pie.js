@@ -1,8 +1,10 @@
 function Pie() {
   return (
     <footer className="pie">
-      <p>Club Social y Deportivo Los Algarrobos · Zona norte, Córdoba</p>
-      <p>SocioClub {new Date().getFullYear()}</p>
+      <div className="pie-contenido">
+        <p>Club Social y Deportivo Los Algarrobos · Zona norte, Córdoba</p>
+        <p>Mi Club · SocioClub {new Date().getFullYear()}</p>
+      </div>
     </footer>
   );
 }

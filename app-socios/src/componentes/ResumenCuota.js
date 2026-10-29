@@ -6,6 +6,7 @@ function ResumenCuota({ actividades }) {
   const subtotal = sumarCuotas(actividades);
   const porcentaje = obtenerPorcentajeDescuento(actividades.length);
   const total = calcularCuotaMensual(actividades);
+  const siguientePorcentaje = obtenerPorcentajeDescuento(actividades.length + 1);
 
   return (
     <aside className="resumen-cuota">
@@ -20,14 +21,19 @@ function ResumenCuota({ actividades }) {
       </ul>
       {porcentaje > 0 && (
         <p className="resumen-descuento">
-          <span>Bonificación por {actividades.length} actividades ({porcentaje} %)</span>
+          <span>Bonificación {porcentaje} %</span>
           <span>− {formatearPrecio(subtotal - total)}</span>
         </p>
       )}
       <p className="resumen-total">
-        <span>Total</span>
+        <span>Total por mes</span>
         <span>{formatearPrecio(total)}</span>
       </p>
+      {siguientePorcentaje > porcentaje && (
+        <p className="resumen-nota">
+          Con {actividades.length + 1} actividades tenés {siguientePorcentaje} % de bonificación.
+        </p>
+      )}
     </aside>
   );
 }

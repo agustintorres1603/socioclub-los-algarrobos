@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { SocioContext } from '../contexto/SocioContext';
 import { buscarSocioPorDni } from '../servicios/api';
 import { esDniValido } from '../utils/esDniValido';
+import Escudo from './Escudo';
 
 function Ingreso() {
   const { socio, iniciarSesion } = useContext(SocioContext);
@@ -38,16 +39,25 @@ function Ingreso() {
 
   return (
     <section className="ingreso">
-      <h2>Ingresá a Mi Club</h2>
-      <p className="dato-secundario">Con tu DNI podés ver tus actividades, inscribirte y consultar tu cuota.</p>
+      <div className="ingreso-bienvenida">
+        <Escudo className="ingreso-escudo" />
+        <div>
+          <h2>Tu club, en el celular</h2>
+          <p>Mirá tus actividades, anotate en una nueva y consultá cuánto pagás por mes.</p>
+        </div>
+      </div>
 
-      <form onSubmit={manejarEnvio} noValidate>
-        <label htmlFor="dni">DNI</label>
+      <form className="ingreso-formulario" onSubmit={manejarEnvio} noValidate>
+        <h3>Ingresá a Mi Club</h3>
+        <p className="dato-secundario">Club Social y Deportivo Los Algarrobos</p>
+
+        <label htmlFor="dni">Tu DNI</label>
         <input
           id="dni"
           type="text"
           inputMode="numeric"
-          placeholder="Ej: 40123456"
+          autoComplete="off"
+          placeholder="Sin puntos, ej: 40123456"
           value={dni}
           onChange={(evento) => setDni(evento.target.value)}
           className={error ? 'campo campo-con-error' : 'campo'}
@@ -55,12 +65,12 @@ function Ingreso() {
           aria-describedby="error-dni"
         />
         {error && (
-          <p id="error-dni" className="error-campo">
+          <p id="error-dni" className="error-campo" role="alert">
             {error}
           </p>
         )}
-        <button type="submit" className="boton" disabled={buscando}>
-          {buscando ? 'Buscando...' : 'Ingresar'}
+        <button type="submit" className="boton boton-ancho" disabled={buscando}>
+          {buscando ? 'Buscando…' : 'Ingresar'}
         </button>
       </form>
     </section>

@@ -25,8 +25,8 @@ function ListaActividades() {
     cargarActividades();
   }, []);
 
-  // Disciplinas sin repetir para armar las opciones del filtro.
-  const disciplinas = [...new Set(actividades.map((actividad) => actividad.disciplina))];
+  // Disciplinas sin repetir para armar los botones del filtro.
+  const disciplinas = ['Todas', ...new Set(actividades.map((actividad) => actividad.disciplina))];
 
   const actividadesFiltradas =
     disciplina === 'Todas'
@@ -37,24 +37,28 @@ function ListaActividades() {
     navigate(`/actividades/${id}`);
   }
 
-  if (cargando) return <p className="mensaje">Cargando actividades...</p>;
+  if (cargando) return <p className="cargando">Cargando actividades…</p>;
   if (error) return <p className="mensaje mensaje-error">{error}</p>;
 
   return (
     <section>
       <div className="titulo-seccion">
         <h2>Actividades</h2>
-        <label className="filtro">
-          Disciplina
-          <select value={disciplina} onChange={(evento) => setDisciplina(evento.target.value)}>
-            <option value="Todas">Todas</option>
-            {disciplinas.map((nombre) => (
-              <option key={nombre} value={nombre}>
-                {nombre}
-              </option>
-            ))}
-          </select>
-        </label>
+        <p>Elegí una actividad para ver los horarios completos e inscribirte.</p>
+      </div>
+
+      <div className="filtro-disciplinas" role="group" aria-label="Filtrar por disciplina">
+        {disciplinas.map((nombre) => (
+          <button
+            key={nombre}
+            type="button"
+            className="chip"
+            aria-pressed={disciplina === nombre}
+            onClick={() => setDisciplina(nombre)}
+          >
+            {nombre}
+          </button>
+        ))}
       </div>
 
       <div className="grilla-actividades">

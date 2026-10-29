@@ -44,7 +44,7 @@ Yoga arranca sin cupo y Ajedrez con un solo lugar libre (RN1).
 ```
 src/
   componentes/   Encabezado, Pie, Ingreso, ListaActividades, TarjetaActividad,
-                 DetalleActividad, MisActividades, ResumenCuota
+                 DetalleActividad, MisActividades, ResumenCuota, Escudo
   contexto/      SocioContext (socio que ingresó, compartido con useContext)
   datos/         mockData.js (datos locales del hito Semana 2)
   servicios/     api.js (toda la comunicación con el backend)

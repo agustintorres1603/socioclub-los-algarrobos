@@ -4,6 +4,17 @@ import { SocioContext } from '../contexto/SocioContext';
 import { inscribir, obtenerActividad } from '../servicios/api';
 import { formatearPrecio } from '../utils/formatos';
 
+function EnlaceVolver() {
+  return (
+    <Link to="/actividades" className="enlace-volver">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+        <path d="M10 3 5 8l5 5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      Volver a actividades
+    </Link>
+  );
+}
+
 function DetalleActividad() {
   const { id } = useParams();
   const { socio } = useContext(SocioContext);
@@ -46,13 +57,13 @@ function DetalleActividad() {
     }
   }
 
-  if (cargando) return <p className="mensaje">Cargando actividad...</p>;
+  if (cargando) return <p className="cargando">Cargando actividad…</p>;
 
   if (!actividad) {
     return (
       <section>
+        <EnlaceVolver />
         <p className="mensaje mensaje-error">{error}</p>
-        <Link to="/actividades">Volver a actividades</Link>
       </section>
     );
   }
@@ -60,49 +71,70 @@ function DetalleActividad() {
   const sinCupo = actividad.cupoDisponible === 0;
 
   return (
-    <section className="detalle">
-      <Link to="/actividades" className="enlace-volver">
-        ← Volver a actividades
-      </Link>
+    <section>
+      <EnlaceVolver />
 
-      <p className="disciplina">{actividad.disciplina}</p>
-      <h2>{actividad.nombre}</h2>
+      <div className="detalle-grilla">
+        <div className="detalle-info">
+          <h2>{actividad.nombre}</h2>
+          <p className="detalle-horario">
+            {actividad.dias} · {actividad.horario} hs
+          </p>
 
-      <dl className="detalle-datos">
-        <dt>Profesor/a</dt>
-        <dd>{actividad.profesor}</dd>
-        <dt>Días y horario</dt>
-        <dd>{actividad.dias} · {actividad.horario} hs</dd>
-        <dt>Edades</dt>
-        <dd>De {actividad.edadMinima} a {actividad.edadMaxima} años</dd>
-        <dt>Cuota mensual</dt>
-        <dd>{formatearPrecio(actividad.cuotaMensual)}</dd>
-        <dt>Cupo disponible</dt>
-        <dd>
+          <dl className="detalle-datos">
+            <dt>Disciplina</dt>
+            <dd>{actividad.disciplina}</dd>
+            <dt>Profesor/a</dt>
+            <dd>{actividad.profesor}</dd>
+            <dt>Edades</dt>
+            <dd>
+              De {actividad.edadMinima} a {actividad.edadMaxima} años
+            </dd>
+            <dt>Cupo</dt>
+            <dd>{actividad.cupoMaximo} lugares</dd>
+          </dl>
+        </div>
+
+        <aside className="panel-inscripcion">
+          <p className="precio">
+            {formatearPrecio(actividad.cuotaMensual)} <span>por mes</span>
+          </p>
+
           {sinCupo ? (
-            <span className="etiqueta etiqueta-sin-cupo">Sin cupo</span>
+            <span className="estado-cupo sin-lugar">Sin cupo</span>
           ) : (
-            `${actividad.cupoDisponible} de ${actividad.cupoMaximo}`
+            <span className="estado-cupo">
+              {actividad.cupoDisponible} de {actividad.cupoMaximo} lugares libres
+            </span>
           )}
-        </dd>
-      </dl>
 
-      {socio ? (
-        <button type="button" className="boton" disabled={sinCupo || enviando} onClick={manejarInscripcion}>
-          {enviando ? 'Inscribiendo...' : 'Inscribirme'}
-        </button>
-      ) : (
-        <p className="mensaje">
-          Para inscribirte, <Link to="/">ingresá con tu DNI</Link>.
-        </p>
-      )}
+          {socio ? (
+            <button
+              type="button"
+              className="boton boton-ancho"
+              disabled={sinCupo || enviando}
+              onClick={manejarInscripcion}
+            >
+              {enviando ? 'Inscribiendo…' : 'Inscribirme'}
+            </button>
+          ) : (
+            <p className="mensaje">
+              Para inscribirte, <Link to="/">ingresá con tu DNI</Link>.
+            </p>
+          )}
 
-      {mensaje && (
-        <p className="mensaje mensaje-exito">
-          {mensaje} <Link to="/mis-actividades">Ver mis actividades</Link>
-        </p>
-      )}
-      {error && <p className="mensaje mensaje-error">{error}</p>}
+          {mensaje && (
+            <p className="mensaje mensaje-exito" role="status">
+              {mensaje} <Link to="/mis-actividades">Ver mis actividades</Link>
+            </p>
+          )}
+          {error && (
+            <p className="mensaje mensaje-error" role="alert">
+              {error}
+            </p>
+          )}
+        </aside>
+      </div>
     </section>
   );
 }

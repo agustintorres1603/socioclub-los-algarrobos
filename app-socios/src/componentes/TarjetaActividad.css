@@ -1,59 +1,76 @@
 .tarjeta {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 22px;
   border: 1px solid var(--borde);
-  border-top: 4px solid var(--verde);
   border-radius: var(--radio);
   background-color: var(--superficie);
+  box-shadow: var(--sombra);
+  transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.tarjeta:hover {
+  box-shadow: var(--sombra-elevada);
+  transform: translateY(-2px);
 }
 
 .tarjeta-nombre {
-  margin: 2px 0 12px;
-  font-size: 1.2rem;
+  font-size: 1.75rem;
+}
+
+.tarjeta-horario {
+  margin-top: 6px;
+  font-weight: 600;
+  color: var(--verde);
 }
 
 .tarjeta-datos {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin: 0 0 16px;
+  margin: 8px 0 24px;
   padding: 0;
   list-style: none;
   font-size: 0.925rem;
   color: var(--texto-suave);
 }
 
-/* margin-top: auto empuja el precio y el botón al fondo para que las tarjetas queden parejas */
-.tarjeta-precio {
-  margin: auto 0 16px;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.tarjeta-precio span {
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: var(--texto-suave);
-}
-
 .tarjeta-pie {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--borde);
+}
+
+.tarjeta-pie .estado-cupo {
+  margin-top: 8px;
+}
+
+.tarjeta-pie .boton {
+  flex: none;
 }
 
 /* Clase que se agrega cuando la actividad no tiene cupo: la tarjeta se ve gris */
 .tarjeta.sin-cupo {
-  border-top-color: var(--gris);
   background-color: var(--gris-claro);
-  color: var(--texto-suave);
+  box-shadow: none;
 }
 
-.tarjeta.sin-cupo .disciplina,
+.tarjeta.sin-cupo:hover {
+  transform: none;
+}
+
 .tarjeta.sin-cupo .tarjeta-nombre,
-.tarjeta.sin-cupo .tarjeta-precio {
+.tarjeta.sin-cupo .tarjeta-horario,
+.tarjeta.sin-cupo .precio,
+.tarjeta.sin-cupo .tarjeta-datos {
   color: var(--gris);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta,
+  .tarjeta:hover {
+    transition: none;
+    transform: none;
+  }
 }

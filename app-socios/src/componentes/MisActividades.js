@@ -42,38 +42,62 @@ function MisActividades() {
 
   // Sin socio no hay nada que mostrar: se vuelve al ingreso.
   if (!socio) return <Navigate to="/" replace />;
-  if (cargando) return <p className="mensaje">Cargando tus actividades...</p>;
+  if (cargando) return <p className="cargando">Cargando tus actividades…</p>;
 
   return (
     <section>
-      <h2>Mis actividades</h2>
-
-      {mensaje && <p className="mensaje mensaje-exito">{mensaje}</p>}
-      {error && <p className="mensaje mensaje-error">{error}</p>}
+      <div className="titulo-seccion">
+        <h2>Mis actividades</h2>
+        <p>Las actividades en las que estás inscripto y lo que vas a pagar este mes.</p>
+      </div>
 
       {inscripciones.length === 0 ? (
-        <p className="mensaje">
-          Todavía no estás inscripto en ninguna actividad. <Link to="/actividades">Ver actividades</Link>
-        </p>
+        <div className="estado-vacio">
+          {mensaje && (
+            <p className="mensaje mensaje-exito" role="status">
+              {mensaje}
+            </p>
+          )}
+          <h3>Todavía no estás inscripto en ninguna actividad</h3>
+          <p className="dato-secundario">Mirá lo que ofrece el club y anotate desde el detalle de cada actividad.</p>
+          <Link to="/actividades" className="boton">
+            Ver actividades
+          </Link>
+        </div>
       ) : (
         <div className="mis-actividades">
-          <ul className="lista-inscripciones">
-            {inscripciones.map((inscripcion) => (
-              <li key={inscripcion.id} className="inscripcion">
-                <div>
-                  <h3>{inscripcion.actividad.nombre}</h3>
-                  <p>
-                    {inscripcion.actividad.dias} · {inscripcion.actividad.horario} hs ·{' '}
-                    {formatearPrecio(inscripcion.actividad.cuotaMensual)}
-                  </p>
-                  <p className="dato-secundario">Inscripto desde el {formatearFecha(inscripcion.fechaInscripcion)}</p>
-                </div>
-                <button type="button" className="boton-secundario" onClick={() => manejarBaja(inscripcion)}>
-                  Darme de baja
-                </button>
-              </li>
-            ))}
-          </ul>
+          <div>
+            {mensaje && (
+              <p className="mensaje mensaje-exito" role="status">
+                {mensaje}
+              </p>
+            )}
+            {error && (
+              <p className="mensaje mensaje-error" role="alert">
+                {error}
+              </p>
+            )}
+
+            <ul className="lista-inscripciones">
+              {inscripciones.map((inscripcion) => (
+                <li key={inscripcion.id} className="inscripcion">
+                  <div>
+                    <h3>{inscripcion.actividad.nombre}</h3>
+                    <p className="inscripcion-horario">
+                      {inscripcion.actividad.dias} · {inscripcion.actividad.horario} hs
+                    </p>
+                    <p className="dato-secundario">
+                      {formatearPrecio(inscripcion.actividad.cuotaMensual)} por mes · Inscripto desde el{' '}
+                      {formatearFecha(inscripcion.fechaInscripcion)}
+                    </p>
+                  </div>
+                  <button type="button" className="boton-baja" onClick={() => manejarBaja(inscripcion)}>
+                    Darme de baja
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <ResumenCuota actividades={inscripciones.map((inscripcion) => inscripcion.actividad)} />
         </div>

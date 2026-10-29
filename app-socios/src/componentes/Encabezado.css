@@ -1,4 +1,7 @@
 .encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   background-color: var(--verde);
   color: #fff;
 }
@@ -7,26 +10,51 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 24px;
-  max-width: 1040px;
+  gap: 12px 28px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 14px 16px;
+  padding: 12px 20px;
+}
+
+.encabezado :focus-visible {
+  outline-color: var(--dorado);
 }
 
 .marca {
   display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.marca:hover {
+  color: #fff;
+}
+
+.escudo {
+  flex: none;
+  width: 34px;
+  height: 41px;
+}
+
+.marca-texto {
+  display: flex;
   flex-direction: column;
-  line-height: 1.1;
 }
 
 .marca-titulo {
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-family: var(--fuente-titulos);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .marca-subtitulo {
   font-size: 0.8rem;
-  opacity: 0.85;
+  color: #cfe1d4;
 }
 
 .navegacion {
@@ -36,49 +64,63 @@
 }
 
 .navegacion a {
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 999px;
-  color: #fff;
-  font-weight: 500;
+  color: #e5efe8;
+  font-weight: 600;
   text-decoration: none;
-  opacity: 0.85;
+  transition: background-color 0.15s ease-out, color 0.15s ease-out;
 }
 
 .navegacion a:hover {
   background-color: rgba(255, 255, 255, 0.12);
-  opacity: 1;
+  color: #fff;
 }
 
 /* NavLink agrega la clase "active" al enlace de la página actual */
 .navegacion a.active {
-  background-color: rgba(255, 255, 255, 0.2);
-  opacity: 1;
+  background-color: #fff;
+  color: var(--verde-oscuro);
 }
 
 .usuario {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 0.9rem;
+  gap: 10px;
+  font-size: 0.925rem;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--dorado);
+  color: var(--texto);
+  font-family: var(--fuente-titulos);
+  font-size: 1.125rem;
+  font-weight: 700;
 }
 
 .boton-salir {
-  font: inherit;
+  min-height: 36px;
   padding: 4px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 8px;
   background-color: transparent;
   color: #fff;
   cursor: pointer;
+  transition: background-color 0.15s ease-out;
 }
 
 .boton-salir:hover {
   background-color: rgba(255, 255, 255, 0.12);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .encabezado-contenido {
-    gap: 12px;
+    padding: 10px 16px;
   }
 
   .navegacion {
@@ -88,5 +130,9 @@
 
   .usuario {
     margin-left: auto;
+  }
+
+  .usuario-nombre {
+    display: none;
   }
 }
