@@ -1,81 +1,69 @@
+/* Colores del club: los mismos que usa el sitio público (sitio-publico/estilos.css) */
 :root {
-  --verde: #1f5d3a;
-  --verde-oscuro: #143d27;
-  --verde-claro: #e2eee5;
-  --dorado: #e0a93b;
-  --fondo: #f4f0e6;
-  --superficie: #fffdf8;
-  --texto: #1b211d;
-  --texto-suave: #55605a;
-  --borde: #e3dccd;
-  --ambar: #9a4a07;
-  --rojo: #b42318;
-  --rojo-claro: #fdecea;
-  --gris: #626864;
-  --gris-claro: #ebebe6;
-  --radio: 14px;
-  --radio-chico: 10px;
-  --sombra: 0 1px 2px rgba(27, 33, 29, 0.06), 0 6px 16px rgba(27, 33, 29, 0.06);
-  --sombra-elevada: 0 2px 6px rgba(27, 33, 29, 0.06), 0 16px 36px rgba(27, 33, 29, 0.12);
-  --fuente-titulos: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  --fuente-texto: 'Barlow', 'Segoe UI', sans-serif;
+  --color-principal: #245c46;
+  --color-principal-oscuro: #183e31;
+  --color-fondo: #f5f7f3;
+  --color-superficie: #ffffff;
+  --color-texto: #24332c;
+  --color-borde: #dce5dd;
+
+  /* Colores agregados para los estados propios de la app */
+  --color-texto-suave: #4f6158;
+  --color-error: #b42318;
+  --color-error-fondo: #fdecea;
+  --color-exito-fondo: #e6efe9;
+  --color-aviso: #9a4a07;
+  --color-gris: #5f6b65;
+  --color-gris-fondo: #eef1ee;
 }
 
+/* Calculo del tamaño de todos los elementos */
 * {
   box-sizing: border-box;
 }
 
-html {
-  scrollbar-color: #c9c1ae var(--fondo);
-}
-
 body {
   margin: 0;
-  font-family: var(--fuente-texto);
-  font-size: 1rem;
-  line-height: 1.5;
-  background-color: var(--fondo);
-  color: var(--texto);
-  caret-color: var(--verde);
-  accent-color: var(--verde);
-  -webkit-font-smoothing: antialiased;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
 }
 
-h1,
-h2,
-h3 {
-  margin: 0;
-  font-family: var(--fuente-titulos);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  text-wrap: balance;
-}
-
-p {
-  margin: 0;
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 a {
-  color: var(--verde);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+  color: var(--color-principal);
 }
 
-a:hover {
-  color: var(--verde-oscuro);
-}
-
-button {
+button,
+input,
+select,
+textarea {
   font: inherit;
 }
 
-::selection {
-  background-color: var(--dorado);
-  color: var(--texto);
+button {
+  cursor: pointer;
 }
 
 :focus-visible {
-  outline: 3px solid var(--verde);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-principal);
+  outline-offset: 3px;
+}
+
+::selection {
+  background-color: var(--color-principal);
+  color: var(--color-superficie);
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+  }
 }

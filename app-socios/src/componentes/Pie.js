@@ -1,10 +1,9 @@
 function Pie() {
   return (
     <footer className="pie">
-      <div className="pie-contenido">
-        <p>Club Social y Deportivo Los Algarrobos · Zona norte, Córdoba</p>
-        <p>Mi Club · SocioClub {new Date().getFullYear()}</p>
-      </div>
+      <p>Club Social y Deportivo Los Algarrobos</p>
+      <p>Desde 1950 · Villa Cabrera, Córdoba</p>
+      <p>Mi Club · App para socios</p>
     </footer>
   );
 }

@@ -3,17 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { SocioContext } from '../contexto/SocioContext';
 import { inscribir, obtenerActividad } from '../servicios/api';
 import { formatearPrecio } from '../utils/formatos';
-
-function EnlaceVolver() {
-  return (
-    <Link to="/actividades" className="enlace-volver">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-        <path d="M10 3 5 8l5 5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      Volver a actividades
-    </Link>
-  );
-}
+import { obtenerImagen } from '../utils/imagenesActividades';
 
 function DetalleActividad() {
   const { id } = useParams();
@@ -62,43 +52,43 @@ function DetalleActividad() {
   if (!actividad) {
     return (
       <section>
-        <EnlaceVolver />
         <p className="mensaje mensaje-error">{error}</p>
+        <Link to="/actividades" className="boton-volver">
+          Volver a actividades
+        </Link>
       </section>
     );
   }
 
   const sinCupo = actividad.cupoDisponible === 0;
+  const imagen = obtenerImagen(actividad.disciplina);
 
   return (
     <section>
-      <EnlaceVolver />
+      <Link to="/actividades" className="boton-volver">
+        Volver a actividades
+      </Link>
 
-      <div className="detalle-grilla">
-        <div className="detalle-info">
-          <h2>{actividad.nombre}</h2>
-          <p className="detalle-horario">
-            {actividad.dias} · {actividad.horario} hs
-          </p>
+      <div className="detalle-contenido">
+        <article className="panel detalle-actividad">
+          {imagen && <img className="actividad-imagen" src={imagen.src} alt={imagen.alt} />}
+          <div className="actividad-contenido">
+            <h1>{actividad.nombre}</h1>
+            <p className="actividad-disciplina">{actividad.disciplina}</p>
+            <p className="actividad-horario">
+              {actividad.dias} · {actividad.horario} h
+            </p>
+            <p>Profesor/a: {actividad.profesor}</p>
+            <p>
+              Edades: de {actividad.edadMinima} a {actividad.edadMaxima} años
+            </p>
+            <p>Cupo máximo: {actividad.cupoMaximo}</p>
+          </div>
+        </article>
 
-          <dl className="detalle-datos">
-            <dt>Disciplina</dt>
-            <dd>{actividad.disciplina}</dd>
-            <dt>Profesor/a</dt>
-            <dd>{actividad.profesor}</dd>
-            <dt>Edades</dt>
-            <dd>
-              De {actividad.edadMinima} a {actividad.edadMaxima} años
-            </dd>
-            <dt>Cupo</dt>
-            <dd>{actividad.cupoMaximo} lugares</dd>
-          </dl>
-        </div>
-
-        <aside className="panel-inscripcion">
-          <p className="precio">
-            {formatearPrecio(actividad.cuotaMensual)} <span>por mes</span>
-          </p>
+        <aside className="panel panel-inscripcion">
+          <h2>Inscripción</h2>
+          <p className="actividad-cuota">{formatearPrecio(actividad.cuotaMensual)} por mes</p>
 
           {sinCupo ? (
             <span className="estado-cupo sin-lugar">Sin cupo</span>
@@ -111,7 +101,7 @@ function DetalleActividad() {
           {socio ? (
             <button
               type="button"
-              className="boton boton-ancho"
+              className="boton boton-principal boton-ancho"
               disabled={sinCupo || enviando}
               onClick={manejarInscripcion}
             >

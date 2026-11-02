@@ -1,70 +1,63 @@
+/* Tarjeta con imagen, igual que en el catálogo del sitio público */
 .tarjeta {
   display: flex;
   flex-direction: column;
-  padding: 22px;
-  border: 1px solid var(--borde);
-  border-radius: var(--radio);
-  background-color: var(--superficie);
-  box-shadow: var(--sombra);
-  transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  border-radius: 16px;
+  background-color: var(--color-superficie);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* Elevación suave de las tarjetas al pasar el mouse */
 .tarjeta:hover {
-  box-shadow: var(--sombra-elevada);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(24, 62, 49, 0.12);
 }
 
-.tarjeta-nombre {
-  font-size: 1.75rem;
+/* Nombre de la actividad */
+.tarjeta h3 {
+  margin: 0 0 12px;
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 26px;
+  line-height: 1.2;
+  color: var(--color-principal);
 }
 
-.tarjeta-horario {
-  margin-top: 6px;
-  font-weight: 600;
-  color: var(--verde);
-}
-
-.tarjeta-datos {
-  margin: 8px 0 24px;
-  padding: 0;
-  list-style: none;
-  font-size: 0.925rem;
-  color: var(--texto-suave);
+/* Cuota y botón ubicados hacia el final de la tarjeta */
+.tarjeta .actividad-cuota {
+  margin-top: auto;
+  padding-top: 16px;
 }
 
 .tarjeta-pie {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  gap: 16px;
-  margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid var(--borde);
-}
-
-.tarjeta-pie .estado-cupo {
-  margin-top: 8px;
-}
-
-.tarjeta-pie .boton {
-  flex: none;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 /* Clase que se agrega cuando la actividad no tiene cupo: la tarjeta se ve gris */
 .tarjeta.sin-cupo {
-  background-color: var(--gris-claro);
-  box-shadow: none;
+  background-color: var(--color-gris-fondo);
 }
 
 .tarjeta.sin-cupo:hover {
   transform: none;
+  box-shadow: none;
 }
 
-.tarjeta.sin-cupo .tarjeta-nombre,
-.tarjeta.sin-cupo .tarjeta-horario,
-.tarjeta.sin-cupo .precio,
-.tarjeta.sin-cupo .tarjeta-datos {
-  color: var(--gris);
+.tarjeta.sin-cupo .actividad-imagen {
+  filter: grayscale(1);
+  opacity: 0.7;
+}
+
+.tarjeta.sin-cupo h3,
+.tarjeta.sin-cupo .actividad-disciplina,
+.tarjeta.sin-cupo .actividad-cuota {
+  color: var(--color-gris);
 }
 
 @media (prefers-reduced-motion: reduce) {

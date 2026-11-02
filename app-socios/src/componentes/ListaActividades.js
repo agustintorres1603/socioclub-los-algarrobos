@@ -25,8 +25,8 @@ function ListaActividades() {
     cargarActividades();
   }, []);
 
-  // Disciplinas sin repetir para armar los botones del filtro.
-  const disciplinas = ['Todas', ...new Set(actividades.map((actividad) => actividad.disciplina))];
+  // Disciplinas sin repetir para armar las opciones del filtro.
+  const disciplinas = [...new Set(actividades.map((actividad) => actividad.disciplina))];
 
   const actividadesFiltradas =
     disciplina === 'Todas'
@@ -42,23 +42,28 @@ function ListaActividades() {
 
   return (
     <section>
-      <div className="titulo-seccion">
-        <h2>Actividades</h2>
-        <p>Elegí una actividad para ver los horarios completos e inscribirte.</p>
+      <div className="titulo-pagina">
+        <h1>Actividades</h1>
+        <p>Elegí una actividad para ver el detalle e inscribirte.</p>
       </div>
 
-      <div className="filtro-disciplinas" role="group" aria-label="Filtrar por disciplina">
-        {disciplinas.map((nombre) => (
-          <button
-            key={nombre}
-            type="button"
-            className="chip"
-            aria-pressed={disciplina === nombre}
-            onClick={() => setDisciplina(nombre)}
+      <div className="panel filtros-actividades">
+        <h2>Filtrar actividades</h2>
+        <div className="campo-filtro">
+          <label htmlFor="filtro-disciplina">Disciplina</label>
+          <select
+            id="filtro-disciplina"
+            value={disciplina}
+            onChange={(evento) => setDisciplina(evento.target.value)}
           >
-            {nombre}
-          </button>
-        ))}
+            <option value="Todas">Todas</option>
+            {disciplinas.map((nombre) => (
+              <option key={nombre} value={nombre}>
+                {nombre}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="grilla-actividades">

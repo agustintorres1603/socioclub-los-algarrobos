@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { SocioContext } from '../contexto/SocioContext';
 import { darDeBaja, obtenerInscripcionesActivas } from '../servicios/api';
 import { formatearFecha, formatearPrecio } from '../utils/formatos';
+import { obtenerImagen } from '../utils/imagenesActividades';
 import ResumenCuota from './ResumenCuota';
 
 function MisActividades() {
@@ -46,21 +47,21 @@ function MisActividades() {
 
   return (
     <section>
-      <div className="titulo-seccion">
-        <h2>Mis actividades</h2>
-        <p>Las actividades en las que estás inscripto y lo que vas a pagar este mes.</p>
+      <div className="titulo-pagina">
+        <h1>Mis actividades</h1>
+        <p>Las actividades en las que estás inscripto y lo que vas a pagar por mes.</p>
       </div>
 
       {inscripciones.length === 0 ? (
-        <div className="estado-vacio">
+        <div className="panel estado-vacio">
           {mensaje && (
             <p className="mensaje mensaje-exito" role="status">
               {mensaje}
             </p>
           )}
-          <h3>Todavía no estás inscripto en ninguna actividad</h3>
-          <p className="dato-secundario">Mirá lo que ofrece el club y anotate desde el detalle de cada actividad.</p>
-          <Link to="/actividades" className="boton">
+          <h2>Todavía no estás inscripto en ninguna actividad</h2>
+          <p>Mirá lo que ofrece el club y anotate desde el detalle de cada actividad.</p>
+          <Link to="/actividades" className="boton boton-principal">
             Ver actividades
           </Link>
         </div>
@@ -79,23 +80,27 @@ function MisActividades() {
             )}
 
             <ul className="lista-inscripciones">
-              {inscripciones.map((inscripcion) => (
-                <li key={inscripcion.id} className="inscripcion">
-                  <div>
-                    <h3>{inscripcion.actividad.nombre}</h3>
-                    <p className="inscripcion-horario">
-                      {inscripcion.actividad.dias} · {inscripcion.actividad.horario} hs
-                    </p>
-                    <p className="dato-secundario">
-                      {formatearPrecio(inscripcion.actividad.cuotaMensual)} por mes · Inscripto desde el{' '}
-                      {formatearFecha(inscripcion.fechaInscripcion)}
-                    </p>
-                  </div>
-                  <button type="button" className="boton-baja" onClick={() => manejarBaja(inscripcion)}>
-                    Darme de baja
-                  </button>
-                </li>
-              ))}
+              {inscripciones.map((inscripcion) => {
+                const imagen = obtenerImagen(inscripcion.actividad.disciplina);
+                return (
+                  <li key={inscripcion.id} className="panel inscripcion">
+                    {imagen && <img className="actividad-imagen" src={imagen.src} alt="" />}
+                    <div className="inscripcion-datos">
+                      <h2>{inscripcion.actividad.nombre}</h2>
+                      <p className="actividad-horario">
+                        {inscripcion.actividad.dias} · {inscripcion.actividad.horario} h
+                      </p>
+                      <p className="dato-secundario">
+                        {formatearPrecio(inscripcion.actividad.cuotaMensual)} por mes · Inscripto desde el{' '}
+                        {formatearFecha(inscripcion.fechaInscripcion)}
+                      </p>
+                    </div>
+                    <button type="button" className="boton-baja" onClick={() => manejarBaja(inscripcion)}>
+                      Darme de baja
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

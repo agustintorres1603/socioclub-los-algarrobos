@@ -9,8 +9,8 @@ function ResumenCuota({ actividades }) {
   const siguientePorcentaje = obtenerPorcentajeDescuento(actividades.length + 1);
 
   return (
-    <aside className="resumen-cuota">
-      <h3>Cuota mensual estimada</h3>
+    <aside className="panel resumen-cuota">
+      <h2>Cuota mensual estimada</h2>
       <ul>
         {actividades.map((actividad) => (
           <li key={actividad.id}>
@@ -21,7 +21,7 @@ function ResumenCuota({ actividades }) {
       </ul>
       {porcentaje > 0 && (
         <p className="resumen-descuento">
-          <span>Bonificación {porcentaje} %</span>
+          <span>Bonificación {porcentaje}&nbsp;%</span>
           <span>− {formatearPrecio(subtotal - total)}</span>
         </p>
       )}

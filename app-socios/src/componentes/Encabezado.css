@@ -1,135 +1,162 @@
+/* Encabezado blanco con el escudo, igual que el sitio público */
 .encabezado {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: var(--verde);
-  color: #fff;
-}
-
-.encabezado-contenido {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px 28px;
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 12px 20px;
+  gap: 20px;
+  padding: 20px 6%;
+  background-color: var(--color-superficie);
+  border-bottom: 1px solid var(--color-borde);
 }
 
-.encabezado :focus-visible {
-  outline-color: var(--dorado);
-}
-
-.marca {
+/* Escudo y nombre del club */
+.marca-club {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: #fff;
+  gap: 14px;
+  max-width: 100%;
+  color: var(--color-principal);
   text-decoration: none;
 }
 
-.marca:hover {
-  color: #fff;
-}
-
-.escudo {
-  flex: none;
-  width: 34px;
-  height: 41px;
+.marca-escudo {
+  width: 64px;
+  height: 72px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .marca-texto {
   display: flex;
   flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
-.marca-titulo {
-  font-family: var(--fuente-titulos);
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.02em;
+.marca-descripcion {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
 }
 
-.marca-subtitulo {
-  font-size: 0.8rem;
-  color: #cfe1d4;
+.marca-nombre {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
+.marca-club:focus-visible {
+  outline-offset: 5px;
+  border-radius: 4px;
+}
+
+/* Menú de navegación */
 .navegacion {
   display: flex;
-  flex: 1;
-  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.navegacion ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .navegacion a {
-  padding: 8px 14px;
-  border-radius: 999px;
-  color: #e5efe8;
-  font-weight: 600;
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 10px;
+  color: var(--color-texto);
   text-decoration: none;
-  transition: background-color 0.15s ease-out, color 0.15s ease-out;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-.navegacion a:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-  color: #fff;
+/* NavLink le agrega aria-current="page" al enlace de la pantalla actual */
+.navegacion a:hover,
+.navegacion a[aria-current='page'] {
+  background-color: var(--color-principal);
+  color: var(--color-superficie);
 }
 
-/* NavLink agrega la clase "active" al enlace de la página actual */
-.navegacion a.active {
-  background-color: #fff;
-  color: var(--verde-oscuro);
-}
-
+/* Socio que ingresó */
 .usuario {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.925rem;
-}
-
-.avatar {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: var(--dorado);
-  color: var(--texto);
-  font-family: var(--fuente-titulos);
-  font-size: 1.125rem;
-  font-weight: 700;
+  gap: 12px;
+  padding-left: 16px;
+  border-left: 1px solid var(--color-borde);
+  font-weight: 600;
 }
 
 .boton-salir {
-  min-height: 36px;
-  padding: 4px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 8px 14px;
+  border: 1px solid var(--color-principal);
   border-radius: 8px;
-  background-color: transparent;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.15s ease-out;
+  background-color: var(--color-superficie);
+  color: var(--color-principal);
+  font-weight: 700;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .boton-salir:hover {
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: var(--color-principal);
+  color: var(--color-superficie);
 }
 
-@media (max-width: 640px) {
-  .encabezado-contenido {
-    padding: 10px 16px;
+/* Tamaño de la marca en pantallas pequeñas */
+@media (max-width: 600px) {
+  .encabezado {
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .marca-escudo {
+    width: 48px;
+    height: 56px;
+  }
+
+  .marca-nombre {
+    font-size: 20px;
+  }
+
+  .marca-descripcion {
+    font-size: 9px;
+    letter-spacing: 1px;
   }
 
   .navegacion {
-    order: 3;
-    flex-basis: 100%;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .navegacion ul {
+    gap: 4px;
+  }
+
+  .navegacion a {
+    padding: 8px 10px;
+    font-size: 15px;
   }
 
   .usuario {
-    margin-left: auto;
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .boton-salir {
+    padding: 6px 10px;
+    font-size: 15px;
   }
 
   .usuario-nombre {

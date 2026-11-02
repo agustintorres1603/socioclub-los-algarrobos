@@ -44,9 +44,14 @@ Yoga arranca sin cupo y Ajedrez con un solo lugar libre (RN1).
 ```
 src/
   componentes/   Encabezado, Pie, Ingreso, ListaActividades, TarjetaActividad,
-                 DetalleActividad, MisActividades, ResumenCuota, Escudo
+                 DetalleActividad, MisActividades, ResumenCuota
   contexto/      SocioContext (socio que ingresó, compartido con useContext)
   datos/         mockData.js (datos locales del hito Semana 2)
   servicios/     api.js (toda la comunicación con el backend)
-  utils/         calcularCuotaMensual (RN6), esDniValido (RN7), formatos
+  utils/         calcularCuotaMensual (RN6), esDniValido (RN7), formatos,
+                 imagenesActividades
+src/imagenes/    escudo del club (se importa desde JS y CSS)
+public/imagenes/ fotos de las actividades (las mismas del sitio público)
 ```
+
+Los colores, la tipografía y los botones son los mismos de `sitio-publico/estilos.css`, para que todo el sistema se vea igual.
