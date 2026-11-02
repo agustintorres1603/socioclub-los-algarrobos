@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Preinscripción | Club Los Algarrobos</title>
+
+    <link rel="stylesheet" href="estilos.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <a class="marca-club" href="index.html">
+            <img class="marca-escudo" src="imagenes/escudo.png" alt="Escudo del Club Social y Deportivo Los Algarrobos">
+            <span class="marca-texto">
+                <span class="marca-descripcion">Club Social y Deportivo</span>
+                <span class="marca-nombre">Los Algarrobos</span>
+            </span>
+        </a>
+
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="actividades.html">Actividades</a></li>
+                <li><a href="preinscripcion.html" aria-current="page">Preinscripción</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="fondo-preinscripcion">
+        <main class="seccion pagina-preinscripcion">
+            <section aria-labelledby="titulo-preinscripcion">
+                <h1 id="titulo-preinscripcion">Preinscripción a una actividad</h1>
+                <p class="introduccion-seccion">Dejá tus datos y elegí la actividad que te interesa.</p>
+
+                <div class="preinscripcion-contenido">
+                    <form id="formulario-preinscripcion" novalidate>
+                        <div class="campos-formulario">
+                            <div class="campo-formulario">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" id="nombre" name="nombre" required aria-describedby="error-nombre">
+                                <span id="error-nombre" class="error" aria-live="polite"></span>
+                            </div>
+
+                            <div class="campo-formulario">
+                                <label for="apellido">Apellido</label>
+                                <input type="text" id="apellido" name="apellido" required aria-describedby="error-apellido">
+                                <span id="error-apellido" class="error" aria-live="polite"></span>
+                            </div>
+
+                            <div class="campo-formulario">
+                                <label for="dni">DNI sin puntos</label>
+                                <input type="text" id="dni" name="dni" inputmode="numeric" required aria-describedby="error-dni">
+                                <span id="error-dni" class="error" aria-live="polite"></span>
+                            </div>
+
+                            <div class="campo-formulario">
+                                <label for="email">Correo electrónico</label>
+                                <input type="email" id="email" name="email" required aria-describedby="error-email">
+                                <span id="error-email" class="error" aria-live="polite"></span>
+                            </div>
+
+                            <div class="campo-formulario">
+                                <label for="telefono">Teléfono (opcional)</label>
+                                <input type="tel" id="telefono" name="telefono">
+                            </div>
+
+                            <div class="campo-formulario">
+                                <label for="actividad">Actividad de interés</label>
+                                <select id="actividad" name="actividad" required aria-describedby="error-actividad">
+                                    <option value="">Seleccioná una actividad</option>
+                                    <option value="Fútbol infantil">Fútbol infantil</option>
+                                    <option value="Vóley mixto">Vóley mixto</option>
+                                    <option value="Básquet juvenil">Básquet juvenil</option>
+                                    <option value="Natación">Natación</option>
+                                    <option value="Patín artístico">Patín artístico</option>
+                                    <option value="Ajedrez">Ajedrez</option>
+                                    <option value="Funcional adultos">Funcional adultos</option>
+                                    <option value="Yoga">Yoga</option>
+                                </select>
+                                <span id="error-actividad" class="error" aria-live="polite"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="boton boton-principal">Enviar preinscripción</button>
+                        <p id="mensaje-formulario" aria-live="polite"></p>
+                    </form>
+
+                    <aside class="aviso-preinscripcion" aria-labelledby="titulo-aviso">
+                        <h2 id="titulo-aviso">Antes de completar el formulario</h2>
+                        <p>La preinscripción expresa tu interés por una actividad. No confirma una inscripción ni reserva un cupo.</p>
+                        <a href="actividades.html">Consultar actividades, horarios y cuotas</a>
+                    </aside>
+                </div>
+            </section>
+
+            <button type="button" id="boton-volver">Volver</button>
+        </main>
+    </div>
+
+    <footer>
+        <p>Club Social y Deportivo Los Algarrobos</p>
+        <p>Desde 1950 · Villa Cabrera, Córdoba</p>
+        <p>Redes sociales · Próximamente</p>
+
+        <ul class="redes-sociales">
+            <li>
+                <img src="imagenes/instagram.svg" alt="" width="24" height="24">
+                Instagram
+            </li>
+            <li>
+                <img src="imagenes/facebook.svg" alt="" width="24" height="24">
+                Facebook
+            </li>
+            <li>
+                <img src="imagenes/youtube.svg" alt="" width="24" height="24">
+                YouTube
+            </li>
+        </ul>
+
+        <a class="boton boton-contorno" href="index.html#ubicacion">Contactanos</a>
+    </footer>
+</body>
+</html>

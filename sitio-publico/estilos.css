@@ -1,0 +1,881 @@
+/* Colores generales del sitio */
+:root {
+    --color-principal: #245c46;
+    --color-principal-oscuro: #183e31;
+    --color-fondo: #f5f7f3;
+    --color-superficie: #ffffff;
+    --color-texto: #24332c;
+    --color-borde: #dce5dd;
+}
+
+/* Calculo del tamaño de todos los elementos */
+* {
+    box-sizing: border-box;
+}
+
+/* Apariencia general de las tres paginas */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--color-texto);
+    background-color: var(--color-fondo);
+}
+
+/* Comportamiento general de las imagenes */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Color general de los enlaces */
+a {
+    color: var(--color-principal);
+}
+
+/* Fuente de los botones y controles del formulario */
+button, input, select, textarea {
+    font: inherit;
+}
+
+/* Cursor de los botones */
+button {
+    cursor: pointer;
+}
+
+/* Estilos del encabezado y del menú de navegación */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 6%;
+    background-color: var(--color-superficie);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav a {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 10px;
+    color: var(--color-texto);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+nav a:hover, nav a[aria-current="page"] {
+    background-color: var(--color-principal);
+    color: var(--color-superficie);
+}
+
+nav a:focus-visible {
+    outline: 2px solid var(--color-principal);
+    outline-offset: 3px;
+}
+
+/* Escudo y nombre del club en el encabezado */
+.marca-club {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 100%;
+    color: var(--color-principal);
+    text-decoration: none;
+}
+
+.marca-escudo {
+    width: 64px;
+    height: 72px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.marca-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.marca-descripcion {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.marca-nombre {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.marca-club:focus-visible {
+    outline: 2px solid var(--color-principal);
+    outline-offset: 5px;
+    border-radius: 4px;
+}
+
+/* Tamaño de la marca en pantallas pequeñas */
+@media (max-width: 600px) {
+    .marca-escudo {
+        width: 48px;
+        height: 56px;
+    }
+
+    .marca-nombre {
+        font-size: 20px;
+    }
+
+    .marca-descripcion {
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+}
+
+/* Portada de la página de inicio */
+.portada {
+    display: flex;
+    align-items: center;
+    min-height: 520px;
+    padding: 60px 4%;
+    background-color: var(--color-principal-oscuro);
+    background-image: url("imagenes/portada.png");
+    background-size: cover;
+    background-position: left center;
+    background-repeat: no-repeat;
+    color: var(--color-superficie);
+}
+
+/* Ancho del contenido sobre la zona verde */
+.portada-contenido {
+    width: 100%;
+    max-width: 320px;
+}
+
+.portada-etiqueta {
+    margin: 0 0 18px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.portada h1 {
+    margin: 0 0 24px;
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.portada-descripcion {
+    max-width: 600px;
+    margin: 0 0 32px;
+    font-size: 18px;
+}
+
+/* Enlaces de la portada uno debajo del otro */
+.portada-enlaces {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Enlaces con apariencia de botón */
+.boton {
+    display: inline-block;
+    padding: 14px 24px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.boton-claro {
+    background-color: var(--color-superficie);
+    color: var(--color-principal-oscuro);
+}
+
+.boton-claro:hover {
+    background-color: var(--color-fondo);
+}
+
+.boton-contorno {
+    border-color: var(--color-superficie);
+    background-color: transparent;
+    color: var(--color-superficie);
+}
+
+.boton-contorno:hover {
+    background-color: var(--color-superficie);
+    color: var(--color-principal-oscuro);
+}
+
+.boton:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+}
+
+/* Portada en pantallas pequeñas */
+@media (max-width: 600px) {
+    .portada {
+        min-height: 440px;
+        padding: 60px 6%;
+    }
+
+    .portada h1 {
+        font-size: 36px;
+    }
+
+    .portada-descripcion {
+        font-size: 16px;
+    }
+}
+
+/* Espaciado y títulos de las secciones informativas */
+.seccion {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 72px 24px;
+}
+
+.seccion h2 {
+    margin: 0 0 16px;
+    font-size: 36px;
+    line-height: 1.2;
+    color: var(--color-principal);
+}
+
+.introduccion-seccion {
+    max-width: 720px;
+    margin: 0 0 32px;
+    font-size: 18px;
+}
+
+/* Adelanto de actividades en la página de inicio */
+.actividades-destacadas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.actividad-destacada {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+    background-color: var(--color-superficie);
+    color: var(--color-texto);
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.actividad-destacada img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.actividad-destacada h3 {
+    margin: 0;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.actividad-destacada:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(24, 62, 49, 0.12);
+}
+
+.actividad-destacada:focus-visible {
+    outline: 2px solid var(--color-principal);
+    outline-offset: 4px;
+}
+
+.enlace-catalogo {
+    display: inline-block;
+    margin-top: 28px;
+    font-weight: 700;
+}
+
+/* Adelanto de actividades en pantallas medianas */
+@media (max-width: 900px) {
+    .actividades-destacadas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Texto, secciones y adelanto de actividades en celulares */
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+
+    .seccion {
+        padding: 48px 20px;
+    }
+
+    .seccion h2 {
+        font-size: 28px;
+    }
+
+    .actividades-destacadas {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Línea de tiempo de la historia del club */
+/* Separación entre las actividades y la historia */
+#actividades {
+    padding-bottom: 40px;
+}
+
+/* Banda de inicio de la sección Historia */
+.banda-historia {
+    margin: 0;
+    padding: 28px 24px;
+    background-color: var(--color-principal);
+    color: var(--color-superficie);
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 36px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+/* Contenedor y línea central de la historia */
+.linea-tiempo {
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 48px 24px;
+}
+
+.linea-tiempo::before {
+    content: "";
+    position: absolute;
+    top: 48px;
+    bottom: 48px;
+    left: 50%;
+    width: 2px;
+    margin-left: -1px;
+    background-color: var(--color-borde);
+}
+
+/* Acontecimientos alternados a ambos lados */
+.hito {
+    position: relative;
+    width: 50%;
+    padding: 0 36px 40px 0;
+}
+
+.hito:nth-child(even) {
+    margin-left: 50%;
+    padding: 0 0 40px 36px;
+}
+
+.hito::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: -7px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--color-principal);
+}
+
+.hito:nth-child(even)::before {
+    right: auto;
+    left: -7px;
+}
+
+/* Tipografía de los acontecimientos */
+.hito h3 {
+    margin: 0 0 18px;
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--color-principal);
+}
+
+.anio-historia {
+    display: block;
+    margin-bottom: 12px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.hito p {
+    margin: 0 0 12px;
+}
+
+/* Línea de tiempo en pantallas pequeñas */
+@media (max-width: 760px) {
+    .banda-historia {
+        font-size: 28px;
+    }
+
+    .linea-tiempo::before {
+        left: 24px;
+    }
+
+    .hito,
+    .hito:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+        padding: 0 0 32px 30px;
+    }
+
+    .hito::before,
+    .hito:nth-child(even)::before {
+        right: auto;
+        left: -7px;
+    }
+}
+
+/* Identidad del club con el escudo junto al texto */
+.identidad {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    padding-top: 40px;
+}
+
+.identidad-escudo {
+    width: 240px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.identidad-texto {
+    max-width: 900px;
+}
+
+.identidad-texto p {
+    margin: 0 0 16px;
+}
+
+/* Identidad del club en pantallas pequeñas */
+@media (max-width: 760px) {
+    .identidad {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 28px;
+    }
+
+    .identidad-escudo {
+        width: 180px;
+        align-self: center;
+    }
+}
+
+/* Fondo de la sección de ubicación */
+#ubicacion {
+    background-color: var(--color-superficie);
+    border-top: 1px solid var(--color-borde);
+}
+
+/* Distribución del contenido de ubicación */
+#ubicacion .seccion {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-align: center;
+}
+
+/* Ancho y separación de los párrafos de ubicación */
+#ubicacion p {
+    max-width: 760px;
+    margin: 0 auto 16px;
+}
+
+/* Apariencia general del pie de página */
+footer {
+    padding: 32px 24px;
+    background-color: var(--color-principal-oscuro);
+    color: var(--color-superficie);
+    text-align: center;
+}
+
+/* Separación entre los textos del pie de página */
+footer p {
+    margin: 6px 0;
+}
+
+/* Nombre del club destacado en el pie de página */
+footer p:first-child {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Distribución de las redes sociales en el pie de página */
+.redes-sociales {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0 24px;
+    padding: 0;
+    list-style: none;
+}
+
+/* Alineación de cada ícono con el nombre de la red */
+.redes-sociales li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Tamaño de los íconos de redes sociales */
+.redes-sociales img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Títulos principales de actividades y preinscripción */
+.pagina-actividades h1,
+.pagina-preinscripcion h1 {
+    margin: 0 0 16px;
+    font-size: 48px;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--color-principal);
+}
+
+/* Introducciones centradas de actividades y preinscripción */
+.pagina-actividades .introduccion-seccion,
+.pagina-preinscripcion .introduccion-seccion {
+    margin: 0 auto 32px;
+    text-align: center;
+}
+
+/* Recuadro de filtros de actividades */
+.filtros-actividades {
+    margin-bottom: 40px;
+    padding: 24px;
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+    background-color: var(--color-superficie);
+}
+
+.filtros-actividades h2 {
+    margin: 0 0 20px;
+    font-size: 24px;
+}
+
+/* Separación del botón para aplicar los filtros */
+.filtros-actividades .boton {
+    margin-top: 20px;
+}
+
+/* Filtros y campos del formulario en dos columnas */
+.campos-filtros,
+.campos-formulario {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.campo-filtro,
+.campo-formulario {
+    min-width: 0;
+}
+
+/* Etiquetas de los filtros y del formulario */
+.campo-filtro label,
+.campo-formulario label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+/* Apariencia compartida de los controles de filtros y formulario */
+.campo-filtro select,
+.campo-filtro input,
+.campo-formulario input,
+.campo-formulario select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    background-color: var(--color-superficie);
+    color: var(--color-texto);
+}
+
+/* Foco visible al navegar por los controles con el teclado */
+.campo-filtro select:focus-visible,
+.campo-filtro input:focus-visible,
+.campo-formulario input:focus-visible,
+.campo-formulario select:focus-visible {
+    outline: 2px solid var(--color-principal);
+    outline-offset: 2px;
+}
+
+/* Título y filtros de actividades en celulares */
+@media (max-width: 600px) {
+    .pagina-actividades h1 {
+        font-size: 32px;
+    }
+
+    .filtros-actividades {
+        padding: 20px;
+    }
+
+    .campos-filtros {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Distribución del catálogo en dos columnas */
+#lista-actividades {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+/* Apariencia general de las tarjetas con imagen */
+.tarjeta-actividad {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+    background-color: var(--color-superficie);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Imagen de cada actividad */
+.actividad-imagen {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* Encuadre de vóley */
+.actividad-imagen[src="imagenes/voley.jpg"] {
+    object-position: center 80%;
+}
+
+/* Encuadre de natación */
+.actividad-imagen[src="imagenes/natacion.jpg"] {
+    object-position: center 40%;
+}
+
+/* Espacio y distribución de los datos dentro de la tarjeta */
+.actividad-contenido {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 24px;
+}
+
+/* Elevación suave de las tarjetas al pasar el mouse */
+.tarjeta-actividad:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(24, 62, 49, 0.12);
+}
+
+/* Nombre de la actividad */
+.tarjeta-actividad h3 {
+    margin: 0 0 12px;
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 26px;
+    line-height: 1.2;
+    color: var(--color-principal);
+}
+
+/* Separación entre los datos de la actividad */
+.tarjeta-actividad p {
+    margin: 0 0 12px;
+}
+
+/* Disciplina y horario destacados */
+.actividad-disciplina {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-principal);
+}
+
+.actividad-horario {
+    font-weight: 700;
+}
+
+/* Cuota mensual ubicada hacia el final de la tarjeta */
+.tarjeta-actividad .actividad-cuota {
+    margin-top: auto;
+    padding-top: 16px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-principal);
+}
+
+/* Botones de acción con fondo verde */
+.boton-principal {
+    background-color: var(--color-principal);
+    color: var(--color-superficie);
+}
+
+.boton-principal:hover {
+    background-color: var(--color-principal-oscuro);
+}
+
+.boton-principal:focus-visible {
+    outline-color: var(--color-principal);
+}
+
+/* Mensajes de búsqueda que ocupan todo el ancho del catálogo */
+#lista-actividades > p {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 24px;
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+    background-color: var(--color-superficie);
+}
+
+/* Separación y apariencia del botón Volver */
+#boton-volver {
+    margin-top: 32px;
+    padding: 10px 18px;
+    border: 1px solid var(--color-principal);
+    border-radius: 8px;
+    background-color: var(--color-superficie);
+    color: var(--color-principal);
+    font-weight: 700;
+}
+
+/* Catálogo en celulares */
+@media (max-width: 600px) {
+    #lista-actividades {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Escudo fijo y tenue como fondo de actividades y preinscripción */
+.fondo-actividades, .fondo-preinscripcion {
+    background-color: var(--color-fondo);
+    background-image:
+        linear-gradient(
+            rgba(245, 247, 243, 0.98),
+            rgba(245, 247, 243, 0.98)
+        ),
+        url("imagenes/escudo.png");
+    background-size: cover, 85% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Fondo de actividades y preinscripción en celulares */
+@media (max-width: 600px) {
+    .fondo-actividades, .fondo-preinscripcion {
+        background-attachment: scroll;
+    }
+}
+
+/* Distribución del formulario y del aviso complementario */
+.preinscripcion-contenido {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+/* Recuadros del formulario y del aviso */
+#formulario-preinscripcion,
+.aviso-preinscripcion {
+    padding: 24px;
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+    background-color: var(--color-superficie);
+}
+
+/* Separación del botón de envío */
+#formulario-preinscripcion .boton {
+    margin-top: 24px;
+}
+
+/* Errores junto a los campos del formulario */
+.campo-formulario .error {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+    color: #b42318;
+}
+
+/* Mensaje general de validación del formulario */
+#mensaje-formulario {
+    margin: 16px 0 0;
+    font-size: 16px;
+}
+
+/* Contenido del aviso complementario */
+.aviso-preinscripcion h2 {
+    font-size: 24px;
+}
+
+.aviso-preinscripcion p {
+    margin: 0 0 16px;
+}
+
+.aviso-preinscripcion a {
+    font-weight: 700;
+}
+
+/* Formulario y aviso apilados en pantallas medianas */
+@media (max-width: 900px) {
+    .preinscripcion-contenido {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Formulario de preinscripción en celulares */
+@media (max-width: 600px) {
+    .pagina-preinscripcion h1 {
+        font-size: 32px;
+    }
+
+    .campos-formulario {
+        grid-template-columns: 1fr;
+    }
+
+    #formulario-preinscripcion,
+    .aviso-preinscripcion {
+        padding: 20px;
+    }
+
+    #formulario-preinscripcion .boton {
+        width: 100%;
+    }
+}
+
+/* Bordes y foco de los campos con errores */
+.campo-formulario input[aria-invalid="true"],
+.campo-formulario select[aria-invalid="true"] {
+    border-color: #b42318;
+    outline-color: #b42318;
+}
