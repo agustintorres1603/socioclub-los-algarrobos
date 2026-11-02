@@ -1,13 +1,14 @@
-# Etapa 1: Compilar la aplicación con Maven y Java 17
+# Etapa 1: Compilar la aplicación con Maven
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Etapa 2: Imagen ligera para ejecutar la aplicación
+# Etapa 2: Imagen ligera para ejecución
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
+ENV PORT=8080
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx380m", "-Xms128m", "-jar", "app.jar"]
