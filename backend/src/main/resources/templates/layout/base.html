@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo} + ' - Club Los Algarrobos'">Club Los Algarrobos</title>
+    <style>
+        :root {
+            --color-principal: #245c46;
+            --color-principal-oscuro: #183e31;
+            --color-fondo: #f5f7f3;
+            --color-superficie: #ffffff;
+            --color-texto: #24332c;
+            --color-borde: #dce5dd;
+            --color-peligro: #c92a2a;
+            --color-exito: #2b8a3e;
+        }
+        * { box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { margin: 0; background-color: var(--color-fondo); color: var(--color-texto); }
+        header { background-color: var(--color-principal); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 1.4rem; }
+        nav a { color: white; text-decoration: none; margin-left: 1.5rem; font-weight: bold; }
+        nav a:hover { text-decoration: underline; }
+        main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: var(--color-superficie); border: 1px solid var(--color-borde); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid var(--color-borde); }
+        th { background-color: #eef2ed; }
+        .btn { display: inline-block; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; border: none; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background-color: var(--color-principal); color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-danger { background-color: var(--color-peligro); color: white; }
+        .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.8rem; }
+        .alert { padding: 0.75rem 1.25rem; border-radius: 4px; margin-bottom: 1rem; font-weight: bold; }
+        .alert-success { background-color: #d3f9d8; color: var(--color-exito); border: 1px solid #b2f2bb; }
+        .alert-danger { background-color: #ffe3e3; color: var(--color-peligro); border: 1px solid #ffc9c9; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.3rem; font-weight: bold; }
+        input, select { width: 100%; padding: 0.5rem; border: 1px solid var(--color-borde); border-radius: 4px; }
+        footer { background-color: var(--color-principal-oscuro); color: white; text-align: center; padding: 1.5rem; margin-top: 3rem; }
+    </style>
+</head>
+<body>
+    <header th:fragment="header">
+        <h1>Club Social y Deportivo Los Algarrobos · Secretaría</h1>
+        <nav>
+            <a th:href="@{/actividades}">Actividades</a>
+            <a th:href="@{/socios}">Socios</a>
+            <a th:href="@{/inscripciones/nueva}">Nueva Inscripción</a>
+        </nav>
+    </header>
+
+    <footer th:fragment="footer">
+        <p>© 2026 Club Social y Deportivo Los Algarrobos · Sistema Interno de Gestión</p>
+    </footer>
+</body>
+</html>

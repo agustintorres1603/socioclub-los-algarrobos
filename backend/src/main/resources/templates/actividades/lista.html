@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Catálogo de Actividades')}"></head>
+<body>
+    <header th:replace="~{layout/base :: header}"></header>
+
+    <main>
+        <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Gestión de Actividades</h2>
+            <a th:href="@{/actividades/nueva}" class="btn btn-primary">+ Nueva Actividad</a>
+        </div>
+
+        <div class="card">
+            <form th:action="@{/actividades}" method="get" style="display: flex; gap: 1rem; align-items: flex-end;">
+                <div class="form-group" style="flex: 1; margin: 0;">
+                    <label for="disciplina">Filtrar por Disciplina:</label>
+                    <select name="disciplina" id="disciplina">
+                        <option value="todas" th:selected="${disciplinaSeleccionada == 'todas'}">Todas las disciplinas</option>
+                        <option value="Fútbol" th:selected="${disciplinaSeleccionada == 'Fútbol'}">Fútbol</option>
+                        <option value="Vóley" th:selected="${disciplinaSeleccionada == 'Vóley'}">Vóley</option>
+                        <option value="Básquet" th:selected="${disciplinaSeleccionada == 'Básquet'}">Básquet</option>
+                        <option value="Natación" th:selected="${disciplinaSeleccionada == 'Natación'}">Natación</option>
+                        <option value="Patín" th:selected="${disciplinaSeleccionada == 'Patín'}">Patín</option>
+                        <option value="Ajedrez" th:selected="${disciplinaSeleccionada == 'Ajedrez'}">Ajedrez</option>
+                        <option value="Fitness" th:selected="${disciplinaSeleccionada == 'Fitness'}">Fitness</option>
+                        <option value="Bienestar" th:selected="${disciplinaSeleccionada == 'Bienestar'}">Bienestar</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Actividad</th>
+                        <th>Disciplina</th>
+                        <th>Profesor</th>
+                        <th>Días y Horarios</th>
+                        <th>Edades</th>
+                        <th>Cupo Disp.</th>
+                        <th>Cuota</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="act : ${actividades}">
+                        <td th:text="${act.nombre}" style="font-weight: bold;"></td>
+                        <td th:text="${act.disciplina}"></td>
+                        <td th:text="${act.profesor}"></td>
+                        <td th:text="${act.dias} + ' ' + ${act.horario}"></td>
+                        <td th:text="${act.edadMinima} + ' a ' + ${act.edadMaxima} + ' años'"></td>
+                        <td>
+                            <strong th:text="${cuposDisponibles[act.id]}"></strong> / <span th:text="${act.cupoMaximo}"></span>
+                        </td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(act.cuotaMensual, 1, 'POINT', 0, 'COMMA')}"></td>
+                        <td>
+                            <a th:href="@{'/actividades/' + ${act.id} + '/inscriptos'}" class="btn btn-secondary btn-sm">Ver Inscriptos</a>
+                            <a th:href="@{'/actividades/editar/' + ${act.id}}" class="btn btn-primary btn-sm">Editar</a>
+                            <a th:href="@{'/actividades/eliminar/' + ${act.id}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar actividad?')">Baja</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Formulario Actividad')}"></head>
+<body>
+    <header th:replace="~{layout/base :: header}"></header>
+
+    <main>
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <h2 th:text="${actividad.id == null ? 'Nueva Actividad' : 'Editar Actividad'}"></h2>
+            
+            <form th:action="@{/actividades/guardar}" th:object="${actividad}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" th:field="*{nombre}" required />
+                </div>
+                <div class="form-group">
+                    <label>Disciplina:</label>
+                    <input type="text" th:field="*{disciplina}" required />
+                </div>
+                <div class="form-group">
+                    <label>Profesor/a:</label>
+                    <input type="text" th:field="*{profesor}" required />
+                </div>
+                <div class="form-group">
+                    <label>Días:</label>
+                    <input type="text" th:field="*{dias}" placeholder="Ej: Lun y Mié" required />
+                </div>
+                <div class="form-group">
+                    <label>Horario:</label>
+                    <input type="text" th:field="*{horario}" placeholder="Ej: 18:00" required />
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Edad Mínima:</label>
+                        <input type="number" th:field="*{edadMinima}" required />
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Edad Máxima:</label>
+                        <input type="number" th:field="*{edadMaxima}" required />
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Cupo Máximo:</label>
+                        <input type="number" th:field="*{cupoMaximo}" required />
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Cuota Mensual ($):</label>
+                        <input type="number" step="0.01" th:field="*{cuotaMensual}" required />
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                    <a th:href="@{/actividades}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+</body>
+</html>

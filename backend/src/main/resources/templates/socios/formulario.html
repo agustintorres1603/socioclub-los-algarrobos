@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Formulario Socio')}"></head>
+<body>
+    <header th:replace="~{layout/base :: header}"></header>
+
+    <main>
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <h2 th:text="${socio.id == null ? 'Nuevo Socio' : 'Editar Socio'}"></h2>
+            
+            <form th:action="@{/socios/guardar}" th:object="${socio}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="form-group">
+                    <label>DNI (7 u 8 dígitos sin puntos):</label>
+                    <input type="text" th:field="*{dni}" required pattern="[0-9]{7,8}" />
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Nombre:</label>
+                        <input type="text" th:field="*{nombre}" required />
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Apellido:</label>
+                        <input type="text" th:field="*{apellido}" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Fecha de Nacimiento:</label>
+                    <input type="date" th:field="*{fechaNacimiento}" required />
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" th:field="*{email}" required />
+                </div>
+                <div class="form-group">
+                    <label>Teléfono:</label>
+                    <input type="text" th:field="*{telefono}" />
+                </div>
+                <div class="form-group">
+                    <label>Estado de Cuota:</label>
+                    <select th:field="*{estadoCuota}">
+                        <option value="AL_DIA">AL DÍA</option>
+                        <option value="MOROSO">MOROSO</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                    <a th:href="@{/socios}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+</body>
+</html>
