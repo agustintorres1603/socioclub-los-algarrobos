@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Actividades | Club Los Algarrobos</title>
+
+    <link rel="stylesheet" href="estilos.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <a class="marca-club" href="index.html">
+            <img class="marca-escudo" src="imagenes/escudo.png" alt="Escudo del Club Social y Deportivo Los Algarrobos">
+            <span class="marca-texto">
+                <span class="marca-descripcion">Club Social y Deportivo</span>
+                <span class="marca-nombre">Los Algarrobos</span>
+            </span>
+        </a>
+
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="actividades.html" aria-current="page">Actividades</a></li>
+                <li><a href="preinscripcion.html">Preinscripción</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="fondo-actividades">
+        <main class="seccion pagina-actividades">
+            <section aria-labelledby="titulo-actividades">
+                <h1 id="titulo-actividades">Actividades del club</h1>
+                <p class="introduccion-seccion">Explorá las propuestas y encontrá una actividad para vos.</p>
+            </section>
+
+            <section class="filtros-actividades" aria-labelledby="titulo-filtros">
+                <h2 id="titulo-filtros">Filtrar actividades</h2>
+
+                <div class="campos-filtros">
+                    <div class="campo-filtro">
+                        <label for="filtro-disciplina">Disciplina</label>
+                        <select id="filtro-disciplina">
+                            <option value="todas">Todas las disciplinas</option>
+                            <option value="Fútbol">Fútbol</option>
+                            <option value="Vóley">Vóley</option>
+                            <option value="Básquet">Básquet</option>
+                            <option value="Natación">Natación</option>
+                            <option value="Patín">Patín</option>
+                            <option value="Ajedrez">Ajedrez</option>
+                            <option value="Fitness">Fitness</option>
+                            <option value="Bienestar">Bienestar</option>
+                        </select>
+                    </div>
+
+                    <div class="campo-filtro">
+                        <label for="filtro-edad">Edad</label>
+                        <input type="number" id="filtro-edad" min="0" placeholder="Ingresá tu edad">
+                    </div>
+                </div>
+                <button type="button" id="aplicar-filtros" class="boton boton-principal">Aplicar filtros</button>
+            </section>
+
+            <section aria-labelledby="titulo-listado">
+                <h2 id="titulo-listado">Actividades disponibles</h2>
+
+                <div id="lista-actividades"></div>
+            </section>
+
+            <button type="button" id="boton-volver">Volver</button>
+        </main>
+    </div>
+
+    <footer>
+        <p>Club Social y Deportivo Los Algarrobos</p>
+        <p>Desde 1950 · Villa Cabrera, Córdoba</p>
+        <p>Redes sociales · Próximamente</p>
+
+        <ul class="redes-sociales">
+            <li>
+                <img src="imagenes/instagram.svg" alt="" width="24" height="24">
+                Instagram
+            </li>
+            <li>
+                <img src="imagenes/facebook.svg" alt="" width="24" height="24">
+                Facebook
+            </li>
+            <li>
+                <img src="imagenes/youtube.svg" alt="" width="24" height="24">
+                YouTube
+            </li>
+        </ul>
+
+        <a class="boton boton-contorno" href="index.html#ubicacion">Contactanos</a>
+    </footer>
+</body>
+</html>
