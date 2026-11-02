@@ -1,0 +1,319 @@
+{
+  "info": {
+    "_postman_id": "c1f7b8a2-7b89-4a92-91a5-8e3b09d12345",
+    "name": "SocioClub - API REST Los Algarrobos",
+    "description": "Colección completa de endpoints para SocioClub (Universidad Siglo 21). Cubre operaciones CRUD, búsquedas, casos exitosos y pruebas de reglas de negocio RN1 a RN5 con respuesta 409 Conflict.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Actividades",
+      "item": [
+        {
+          "name": "GET - Listar todas con cupo disponible",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/actividades",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "actividades"]
+            }
+          }
+        },
+        {
+          "name": "GET - Filtrar por disciplina (Fútbol)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/actividades?disciplina=Fútbol",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "actividades"],
+              "query": [
+                { "key": "disciplina", "value": "Fútbol" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET - Buscar actividad por ID (Exitosa)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/actividades/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "actividades", "1"]
+            }
+          }
+        },
+        {
+          "name": "GET - Buscar actividad por ID inexistente (404 Not Found)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/actividades/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "actividades", "999"]
+            }
+          }
+        },
+        {
+          "name": "POST - Crear nueva actividad (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Taekwondo infantil\",\n  \"disciplina\": \"Artes Marciales\",\n  \"profesor\": \"Carlos Paz\",\n  \"dias\": \"Mar y Jue\",\n  \"horario\": \"18:30\",\n  \"edadMinima\": 6,\n  \"edadMaxima\": 13,\n  \"cupoMaximo\": 20,\n  \"cuotaMensual\": 19500.00\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/actividades",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "actividades"]
+            }
+          }
+        },
+        {
+          "name": "PUT - Modificar actividad (200 OK)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Fútbol infantil Avanzado\",\n  \"disciplina\": \"Fútbol\",\n  \"profesor\": \"Diego Ferreyra\",\n  \"dias\": \"Lun y Mié\",\n  \"horario\": \"18:00\",\n  \"edadMinima\": 6,\n  \"edadMaxima\": 12,\n  \"cupoMaximo\": 45,\n  \"cuotaMensual\": 20000.00\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/actividades/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "actividades", "1"]
+            }
+          }
+        },
+        {
+          "name": "DELETE - Eliminar actividad con inscriptos (409 Conflict)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/actividades/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "actividades", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Socios",
+      "item": [
+        {
+          "name": "GET - Buscar por DNI existente (200 OK)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/socios/dni/45123456",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "socios", "dni", "45123456"]
+            }
+          }
+        },
+        {
+          "name": "GET - Buscar por DNI inexistente (404 Not Found)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/socios/dni/99999999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "socios", "dni", "99999999"]
+            }
+          }
+        },
+        {
+          "name": "GET - Listar inscripciones activas de un socio",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/socios/5/inscripciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "socios", "5", "inscripciones"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Inscripciones y Reglas de Negocio (RN1 a RN5)",
+      "item": [
+        {
+          "name": "POST - Inscripción Exitosa (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"socioId\": 4,\n  \"actividadId\": 3\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/inscripciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "inscripciones"]
+            }
+          }
+        },
+        {
+          "name": "POST - Rechazo por RN4: Socio Moroso (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"socioId\": 14,\n  \"actividadId\": 7\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/inscripciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "inscripciones"]
+            }
+          }
+        },
+        {
+          "name": "POST - Rechazo por RN2: Inscripción Duplicada (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"socioId\": 1,\n  \"actividadId\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/inscripciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "inscripciones"]
+            }
+          }
+        },
+        {
+          "name": "POST - Rechazo por RN3: Edad fuera de rango (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"socioId\": 12,\n  \"actividadId\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/inscripciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "inscripciones"]
+            }
+          }
+        },
+        {
+          "name": "POST - Rechazo por RN5: Máximo 3 actividades alcanzado (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"socioId\": 5,\n  \"actividadId\": 4\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/inscripciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "inscripciones"]
+            }
+          }
+        },
+        {
+          "name": "PUT - Dar de baja inscripción (RF9 - 200 OK)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/inscripciones/1/baja",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "inscripciones", "1", "baja"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Preinscripciones (RF3)",
+      "item": [
+        {
+          "name": "POST - Registrar Preinscripción desde sitio público (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Lucas\",\n  \"apellido\": \"Barrientos\",\n  \"dni\": \"43888999\",\n  \"email\": \"lucas.b@example.com\",\n  \"telefono\": \"3515998877\",\n  \"actividadId\": 3\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/preinscripciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "preinscripciones"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

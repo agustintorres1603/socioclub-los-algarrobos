@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Padrón de Socios')}"></head>
+<body>
+    <header th:replace="~{layout/base :: header}"></header>
+
+    <main>
+        <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Padrón de Socios</h2>
+            <a th:href="@{/socios/nuevo}" class="btn btn-primary">+ Nuevo Socio</a>
+        </div>
+
+        <div class="card">
+            <!-- Búsqueda por Apellido (RF5) -->
+            <form th:action="@{/socios}" method="get" style="display: flex; gap: 1rem; align-items: flex-end;">
+                <div class="form-group" style="flex: 1; margin: 0;">
+                    <label for="apellido">Buscar por Apellido:</label>
+                    <input type="text" name="apellido" id="apellido" th:value="${apellidoBuscado}" placeholder="Escribí un apellido...">
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+                <a th:href="@{/socios}" class="btn btn-secondary">Limpiar</a>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>DNI</th>
+                        <th>Apellido y Nombre</th>
+                        <th>Edad</th>
+                        <th>Email / Teléfono</th>
+                        <th>Estado Cuota</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="s : ${paginaSocios.content}">
+                        <td th:text="${s.dni}"></td>
+                        <td th:text="${s.apellido} + ', ' + ${s.nombre}" style="font-weight: bold;"></td>
+                        <td th:text="${s.getEdad()} + ' años'"></td>
+                        <td>
+                            <span th:text="${s.email}"></span><br>
+                            <small th:text="${s.telefono}"></small>
+                        </td>
+                        <td>
+                            <span th:if="${s.estadoCuota == 'AL_DIA'}" style="color: var(--color-exito); font-weight: bold;">AL DÍA</span>
+                            <span th:if="${s.estadoCuota == 'MOROSO'}" style="color: var(--color-peligro); font-weight: bold;">MOROSO</span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/socios/editar/' + ${s.id}}" class="btn btn-primary btn-sm">Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Paginación con Pageable -->
+            <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem;" th:if="${paginaSocios.totalPages > 1}">
+                <a th:if="${paginaSocios.hasPrevious()}" 
+                   th:href="@{/socios(page=${paginaActual - 1}, apellido=${apellidoBuscado})}" 
+                   class="btn btn-secondary btn-sm">Anterior</a>
+                
+                <span style="align-self: center;" th:text="'Página ' + (${paginaActual} + 1) + ' de ' + ${paginaSocios.totalPages}"></span>
+
+                <a th:if="${paginaSocios.hasNext()}" 
+                   th:href="@{/socios(page=${paginaActual + 1}, apellido=${apellidoBuscado})}" 
+                   class="btn btn-secondary btn-sm">Siguiente</a>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+</body>
+</html>

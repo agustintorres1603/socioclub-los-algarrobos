@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Inscriptos de la Actividad')}"></head>
+<body>
+    <header th:replace="~{layout/base :: header}"></header>
+
+    <main>
+        <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div class="card">
+            <h2 th:text="'Inscriptos en: ' + ${actividad.nombre}"></h2>
+            <p><strong>Cupo disponible:</strong> <span th:text="${cupoDisponible}"></span> de <span th:text="${actividad.cupoMaximo}"></span> lugares.</p>
+            <p><strong>Profesor:</strong> <span th:text="${actividad.profesor}"></span> | <strong>Horario:</strong> <span th:text="${actividad.dias} + ' ' + ${actividad.horario}"></span></p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>DNI</th>
+                        <th>Socio</th>
+                        <th>Edad</th>
+                        <th>Fecha Inscripción</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(inscriptos)}">
+                        <td colspan="6" style="text-align: center;">No hay socios inscriptos en esta actividad.</td>
+                    </tr>
+                    <tr th:each="ins : ${inscriptos}">
+                        <td th:text="${ins.socio.dni}"></td>
+                        <td th:text="${ins.socio.apellido} + ', ' + ${ins.socio.nombre}"></td>
+                        <td th:text="${ins.socio.getEdad()} + ' años'"></td>
+                        <td th:text="${ins.fechaInscripcion}"></td>
+                        <td><span style="color: var(--color-exito); font-weight: bold;" th:text="${ins.estado}"></span></td>
+                        <td>
+                            <a th:href="@{'/inscripciones/baja/' + ${ins.id} + '?actividadId=' + ${actividad.id}}" 
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('¿Seguro que desea dar de baja al socio de esta actividad?')">Dar de Baja</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 1.5rem;">
+                <a th:href="@{/actividades}" class="btn btn-secondary">Volver al catálogo</a>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Nueva Inscripción')}"></head>
+<body>
+    <header th:replace="~{layout/base :: header}"></header>
+
+    <main>
+        <div class="card" style="max-width: 650px; margin: 0 auto;">
+            <h2>Inscribir Socio a una Actividad (RF6)</h2>
+            <p>Seleccioná el socio y la actividad. Las reglas <strong>RN1 a RN5</strong> se validarán automáticamente.</p>
+
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+            <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+
+            <form th:action="@{/inscripciones/guardar}" method="post">
+                <div class="form-group">
+                    <label for="socioId">Socio:</label>
+                    <select name="socioId" id="socioId" required>
+                        <option value="">-- Seleccionar Socio --</option>
+                        <option th:each="s : ${socios}" 
+                                th:value="${s.id}" 
+                                th:text="${s.apellido} + ', ' + ${s.nombre} + ' (DNI: ' + ${s.dni} + ' - ' + ${s.getEdad()} + ' años - ' + ${s.estadoCuota} + ')'">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="actividadId">Actividad:</label>
+                    <select name="actividadId" id="actividadId" required>
+                        <option value="">-- Seleccionar Actividad --</option>
+                        <option th:each="a : ${actividades}" 
+                                th:value="${a.id}" 
+                                th:text="${a.nombre} + ' (' + ${a.disciplina} + ' - Edades: ' + ${a.edadMinima} + ' a ' + ${a.edadMaxima} + ' años - $' + ${#numbers.formatDecimal(a.cuotaMensual, 1, 'POINT', 0, 'COMMA')} + ')'">
+                        </option>
+                    </select>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                    <a th:href="@{/actividades}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Confirmar Inscripción</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+</body>
+</html>
