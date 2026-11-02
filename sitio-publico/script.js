@@ -139,6 +139,18 @@ const formularioPreinscripcion = document.getElementById("formulario-preinscripc
 if (formularioPreinscripcion) {
     const mensajeFormulario = document.getElementById("mensaje-formulario");
 
+    // Mapa para traducir el nombre del select al ID que espera el backend
+    const mapaActividades = {
+        "Fútbol infantil": 1,
+        "Vóley mixto": 2,
+        "Básquet juvenil": 3,
+        "Natación": 4,
+        "Patín artístico": 5,
+        "Ajedrez": 6,
+        "Funcional adultos": 7,
+        "Yoga": 8
+    };
+
     // La expresión regular acepta solamente 7 u 8 dígitos, de principio a fin.
     function esDniValido(dni) {
         return /^\d{7,8}$/.test(dni);
@@ -154,23 +166,28 @@ if (formularioPreinscripcion) {
         const mensaje = document.getElementById(`error-${campo}`);
         const control = document.getElementById(campo);
 
-        mensaje.textContent = texto;
+        if (mensaje) {
+            mensaje.textContent = texto;
+        }
 
-        if (texto !== "") {
-            control.setAttribute("aria-invalid", "true");
-        } else {
-            control.removeAttribute("aria-invalid");
+        if (control) {
+            if (texto !== "") {
+                control.setAttribute("aria-invalid", "true");
+            } else {
+                control.removeAttribute("aria-invalid");
+            }
         }
     }
 
-    formularioPreinscripcion.addEventListener("submit", function (evento) {
+    formularioPreinscripcion.addEventListener("submit", async function (evento) {
         evento.preventDefault();
 
         const nombre = document.getElementById("nombre").value.trim();
         const apellido = document.getElementById("apellido").value.trim();
         const dni = document.getElementById("dni").value.trim();
         const email = document.getElementById("email").value.trim();
-        const actividad = document.getElementById("actividad").value;
+        const telefono = document.getElementById("telefono") ? document.getElementById("telefono").value.trim() : "";
+        const actividadNombre = document.getElementById("actividad").value;
 
         for (const campo of ["nombre", "apellido", "dni", "email", "actividad"]) {
             mostrarError(campo, "");
@@ -205,15 +222,56 @@ if (formularioPreinscripcion) {
             datosValidos = false;
         }
 
-        if (actividad === "") {
+        if (actividadNombre === "" || !mapaActividades[actividadNombre]) {
             mostrarError("actividad", "Seleccioná una actividad.");
             datosValidos = false;
         }
 
-        if (datosValidos) {
-            mensajeFormulario.textContent = "Los datos son válidos, pero la preinscripción todavía no fue enviada.";
-        } else {
+        if (!datosValidos) {
             mensajeFormulario.textContent = "Revisá los campos indicados.";
+            mensajeFormulario.style.color = "#c0392b";
+            return;
+        }
+
+        // Armamos el payload exacto para PreinscripcionRequest en Spring Boot
+        const payload = {
+            nombre: nombre,
+            apellido: apellido,
+            dni: dni,
+            email: email,
+            telefono: telefono,
+            actividadId: mapaActividades[actividadNombre]
+        };
+
+        const botonSubmit = formularioPreinscripcion.querySelector("button[type='submit']");
+        botonSubmit.disabled = true;
+        mensajeFormulario.style.color = "#2c3e50";
+        mensajeFormulario.textContent = "Enviando preinscripción al club...";
+
+        try {
+            const respuesta = await fetch("http://localhost:8080/api/preinscripciones", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (respuesta.ok) {
+                const data = await respuesta.json();
+                mensajeFormulario.style.color = "#27ae60";
+                mensajeFormulario.textContent = `¡Preinscripción registrada con éxito! Tu número de solicitud es #${data.id}.`;
+                formularioPreinscripcion.reset();
+            } else {
+                const errorData = await respuesta.json().catch(() => ({}));
+                mensajeFormulario.style.color = "#c0392b";
+                mensajeFormulario.textContent = errorData.error || "No se pudo registrar la preinscripción. Intentá nuevamente.";
+            }
+        } catch (error) {
+            mensajeFormulario.style.color = "#c0392b";
+            mensajeFormulario.textContent = "Error al conectar con el servidor. Verificá que el backend esté iniciado.";
+        } finally {
+            botonSubmit.disabled = false;
         }
     });
 }
