@@ -1,0 +1,537 @@
+/* Escudo fijo y tenue como fondo, igual que en actividades y preinscripción del sitio público */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-fondo);
+  background-image: linear-gradient(rgba(245, 247, 243, 0.98), rgba(245, 247, 243, 0.98)), url('./imagenes/escudo.png');
+  background-size: cover, 85% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.contenido {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 24px 72px;
+}
+
+/* Título e introducción centrados de cada pantalla */
+
+.titulo-pagina {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.titulo-pagina h1 {
+  margin: 0 0 16px;
+  font-size: 48px;
+  line-height: 1.2;
+  color: var(--color-principal);
+}
+
+.titulo-pagina p {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Recuadro blanco con borde que usan los formularios y avisos */
+
+.panel {
+  padding: 24px;
+  border: 1px solid var(--color-borde);
+  border-radius: 16px;
+  background-color: var(--color-superficie);
+}
+
+.panel h2 {
+  margin: 0 0 16px;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+/* Filtro por disciplina */
+
+.filtros-actividades {
+  margin-bottom: 40px;
+}
+
+.campo-filtro,
+.campo-formulario {
+  min-width: 0;
+}
+
+.campo-filtro label,
+.campo-formulario label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.campo-filtro select,
+.campo-formulario input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  background-color: var(--color-superficie);
+  color: var(--color-texto);
+}
+
+.campo-filtro select {
+  max-width: 420px;
+}
+
+.campo-filtro select:focus-visible,
+.campo-formulario input:focus-visible {
+  outline: 2px solid var(--color-principal);
+  outline-offset: 2px;
+}
+
+/* Campo con error: borde rojo y mensaje debajo */
+.campo-formulario input[aria-invalid='true'] {
+  border-color: var(--color-error);
+  outline-color: var(--color-error);
+}
+
+.campo-formulario .error {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--color-error);
+}
+
+/* Catálogo en dos columnas */
+
+.grilla-actividades {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* Datos de una actividad (los usan la tarjeta y el detalle) */
+
+.actividad-imagen {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Encuadre de vóley y natación, igual que en el sitio público */
+.actividad-imagen[src='/imagenes/voley.jpg'] {
+  object-position: center 80%;
+}
+
+.actividad-imagen[src='/imagenes/natacion.jpg'] {
+  object-position: center 40%;
+}
+
+.actividad-contenido {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px;
+}
+
+.actividad-contenido p {
+  margin: 0 0 12px;
+}
+
+.actividad-disciplina {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-principal);
+}
+
+.actividad-horario {
+  font-weight: 700;
+}
+
+.actividad-cuota {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-principal);
+}
+
+.estado-cupo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-principal);
+}
+
+.estado-cupo::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.estado-cupo.pocos {
+  color: var(--color-aviso);
+}
+
+.estado-cupo.sin-lugar {
+  color: var(--color-error);
+}
+
+/* Botones (mismo estilo que el sitio público) */
+
+.boton {
+  display: inline-block;
+  padding: 14px 24px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.boton-principal {
+  background-color: var(--color-principal);
+  color: var(--color-superficie);
+}
+
+.boton-principal:hover:not(:disabled) {
+  background-color: var(--color-principal-oscuro);
+  color: var(--color-superficie);
+}
+
+.boton:disabled {
+  background-color: var(--color-borde);
+  color: var(--color-gris);
+  cursor: not-allowed;
+}
+
+.boton:focus-visible {
+  outline: 2px solid var(--color-principal);
+  outline-offset: 4px;
+}
+
+.boton-ancho {
+  width: 100%;
+}
+
+/* Botón con borde, como el botón Volver del sitio público */
+.boton-volver,
+.boton-baja {
+  display: inline-block;
+  padding: 10px 18px;
+  border: 1px solid var(--color-principal);
+  border-radius: 8px;
+  background-color: var(--color-superficie);
+  color: var(--color-principal);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.boton-volver:hover {
+  background-color: var(--color-principal);
+  color: var(--color-superficie);
+}
+
+.boton-baja {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.boton-baja:hover {
+  background-color: var(--color-error);
+  color: var(--color-superficie);
+}
+
+/* Mensajes */
+
+.cargando {
+  text-align: center;
+  color: var(--color-texto-suave);
+}
+
+.mensaje {
+  margin: 0;
+  padding: 16px 20px;
+  border: 1px solid var(--color-borde);
+  border-radius: 16px;
+  background-color: var(--color-superficie);
+}
+
+.mensaje-exito {
+  border-color: #c4d8cb;
+  background-color: var(--color-exito-fondo);
+  color: var(--color-principal-oscuro);
+}
+
+.mensaje-error {
+  border-color: #f2c4bf;
+  background-color: var(--color-error-fondo);
+  color: var(--color-error);
+}
+
+/* Ingreso */
+
+.ingreso {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.ingreso-escudo {
+  width: 150px;
+  margin: 0 auto 24px;
+}
+
+.ingreso .boton {
+  margin-top: 24px;
+}
+
+/* Detalle de actividad: datos a la izquierda e inscripción a la derecha */
+
+.detalle-contenido {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: start;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.detalle-actividad {
+  overflow: hidden;
+  padding: 0;
+}
+
+.detalle-actividad .actividad-imagen {
+  aspect-ratio: 16 / 9;
+}
+
+.detalle-actividad h1 {
+  margin: 0 0 12px;
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 36px;
+  line-height: 1.2;
+  color: var(--color-principal);
+}
+
+.panel-inscripcion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel-inscripcion h2,
+.panel-inscripcion p {
+  margin: 0;
+}
+
+/* Mis actividades: lista a la izquierda y resumen de cuota a la derecha */
+
+.mis-actividades {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: start;
+  gap: 32px;
+}
+
+.mis-actividades .mensaje {
+  margin-bottom: 16px;
+}
+
+.lista-inscripciones {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inscripcion {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px;
+}
+
+.inscripcion .actividad-imagen {
+  width: 120px;
+  border-radius: 10px;
+}
+
+.inscripcion-datos {
+  flex: 1;
+  min-width: 0;
+}
+
+.inscripcion h2 {
+  margin: 0 0 4px;
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 22px;
+  color: var(--color-principal);
+}
+
+.inscripcion p {
+  margin: 0;
+}
+
+.dato-secundario {
+  font-size: 15px;
+  color: var(--color-texto-suave);
+}
+
+.estado-vacio {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.estado-vacio p {
+  margin: 0 0 24px;
+}
+
+.resumen-cuota ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resumen-cuota li,
+.resumen-descuento,
+.resumen-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.resumen-cuota li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.resumen-cuota span:last-child {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.resumen-descuento {
+  flex-wrap: wrap;
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: var(--color-exito-fondo);
+  color: var(--color-principal-oscuro);
+  font-weight: 700;
+}
+
+.resumen-total {
+  margin: 16px 0 0;
+  font-weight: 700;
+}
+
+.resumen-total span:last-child {
+  font-size: 24px;
+  color: var(--color-principal);
+}
+
+.resumen-nota {
+  margin: 12px 0 0;
+  font-size: 15px;
+  color: var(--color-texto-suave);
+}
+
+/* Pie de página (igual que el sitio público) */
+
+.pie {
+  padding: 32px 24px;
+  background-color: var(--color-principal-oscuro);
+  color: var(--color-superficie);
+  text-align: center;
+}
+
+.pie p {
+  margin: 6px 0;
+}
+
+.pie p:first-child {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Pantallas medianas */
+
+@media (max-width: 900px) {
+  .detalle-contenido,
+  .mis-actividades {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Celulares */
+
+@media (max-width: 600px) {
+  #root {
+    background-attachment: scroll;
+  }
+
+  .contenido {
+    padding: 40px 20px 56px;
+  }
+
+  .titulo-pagina h1 {
+    font-size: 32px;
+  }
+
+  .grilla-actividades {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .detalle-actividad {
+    padding: 0;
+  }
+
+  .detalle-actividad h1 {
+    font-size: 28px;
+  }
+
+  .ingreso-escudo {
+    width: 110px;
+  }
+
+  /* En el celular el botón de baja pasa abajo, a todo el ancho */
+  .inscripcion {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .inscripcion .actividad-imagen {
+    width: 88px;
+  }
+
+  .inscripcion-datos {
+    flex: 1 1 160px;
+  }
+
+  .inscripcion h2 {
+    font-size: 20px;
+  }
+
+  .inscripcion .boton-baja {
+    width: 100%;
+    text-align: center;
+  }
+}

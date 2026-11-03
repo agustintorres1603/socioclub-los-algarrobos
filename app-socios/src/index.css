@@ -1,0 +1,69 @@
+/* Colores del club: los mismos que usa el sitio público (sitio-publico/estilos.css) */
+:root {
+  --color-principal: #245c46;
+  --color-principal-oscuro: #183e31;
+  --color-fondo: #f5f7f3;
+  --color-superficie: #ffffff;
+  --color-texto: #24332c;
+  --color-borde: #dce5dd;
+
+  /* Colores agregados para los estados propios de la app */
+  --color-texto-suave: #4f6158;
+  --color-error: #b42318;
+  --color-error-fondo: #fdecea;
+  --color-exito-fondo: #e6efe9;
+  --color-aviso: #9a4a07;
+  --color-gris: #5f6b65;
+  --color-gris-fondo: #eef1ee;
+}
+
+/* Calculo del tamaño de todos los elementos */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--color-principal);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-principal);
+  outline-offset: 3px;
+}
+
+::selection {
+  background-color: var(--color-principal);
+  color: var(--color-superficie);
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+  }
+}
