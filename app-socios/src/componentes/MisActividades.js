@@ -34,7 +34,7 @@ function MisActividades() {
     setError('');
     try {
       await darDeBaja(inscripcion.id);
-      setInscripciones(inscripciones.filter((i) => i.id !== inscripcion.id));
+      setInscripciones((actuales) => actuales.filter((i) => i.id !== inscripcion.id));
       setMensaje(`Te diste de baja de ${inscripcion.actividad.nombre}.`);
     } catch (err) {
       setError(err.message);
