@@ -1,3 +1,13 @@
+// =============================================================================
+// CONFIGURACIÓN DE CONEXIÓN CON EL BACKEND
+// =============================================================================
+// Desarrollo local:
+// const API_PREINSCRIPCION_URL = "http://localhost:8080/api/preinscripciones";
+
+// Entorno de producción (Render Cloud):
+const API_PREINSCRIPCION_URL = "https://socioclub-los-algarrobos.onrender.com/api/preinscripciones";
+// =============================================================================
+
 // Datos y comportamiento de cada actividad
 class Actividad {
     constructor(id, nombre, disciplina, profesor, dias, horario, edadMinima, edadMaxima, cupoMaximo, cuotaMensual, imagen, textoAlternativo) {
@@ -23,19 +33,12 @@ class Actividad {
 // Actividades del club con sus imágenes y textos alternativos
 const actividades = [
     new Actividad(1, "Fútbol infantil", "Fútbol", "Diego Ferreyra", "Lunes y miércoles", "18:00", 6, 12, 40, 18000, "imagenes/futbol.jpg", "Equipo de fútbol reunido en una cancha"),
-
     new Actividad(2, "Vóley mixto", "Vóley", "Laura Ceballos", "Martes y jueves", "19:00", 13, 60, 24, 20000, "imagenes/voley.jpg", "Equipo de vóley posando en una cancha cubierta"),
-
     new Actividad(3, "Básquet juvenil", "Básquet", "Martín Oviedo", "Lunes y viernes", "19:30", 12, 17, 20, 19000, "imagenes/basquet.jpg", "Equipo de básquet reunido en una cancha"),
-
     new Actividad(4, "Natación", "Natación", "Sofía Bustos", "Martes y jueves", "17:00", 5, 70, 30, 26000, "imagenes/natacion.jpg", "Nadadoras junto al borde de una pileta"),
-
     new Actividad(5, "Patín artístico", "Patín", "Carla Peralta", "Miércoles y viernes", "17:30", 5, 15, 25, 21000, "imagenes/patin.png", "Clase grupal de patín artístico en un gimnasio"),
-
     new Actividad(6, "Ajedrez", "Ajedrez", "Raúl Giménez", "Sábado", "10:00", 8, 99, 16, 9000, "imagenes/ajedrez.png", "Un adulto y un chico se saludan frente a un tablero de ajedrez"),
-
     new Actividad(7, "Funcional adultos", "Fitness", "Paula Luna", "Lunes, miércoles y viernes", "20:30", 18, 65, 30, 22000, "imagenes/funcional.png", "Grupo de adultos haciendo sentadillas al aire libre"),
-
     new Actividad(8, "Yoga", "Bienestar", "Inés Arguello", "Martes y jueves", "09:00", 16, 99, 15, 17000, "imagenes/yoga.jpg", "Personas practicando yoga en grupo")
 ];
 
@@ -131,7 +134,6 @@ if (listaActividades && filtroDisciplina && filtroEdad) {
 
     mostrarActividades();
 }
-
 
 // Esta sección corresponde a la pagina de preinscripcion.html
 const formularioPreinscripcion = document.getElementById("formulario-preinscripcion");
@@ -249,7 +251,7 @@ if (formularioPreinscripcion) {
         mensajeFormulario.textContent = "Enviando preinscripción al club...";
 
         try {
-            const respuesta = await fetch("http://localhost:8080/api/preinscripciones", {
+            const respuesta = await fetch(API_PREINSCRIPCION_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

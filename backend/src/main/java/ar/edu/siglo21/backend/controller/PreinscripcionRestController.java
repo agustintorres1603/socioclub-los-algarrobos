@@ -11,6 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/preinscripciones")
+@CrossOrigin(origins = "*") // Habilita peticiones desde Vercel y localhost
 public class PreinscripcionRestController {
 
     private final PreinscripcionService preinscripcionService;
