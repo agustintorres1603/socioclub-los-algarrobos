@@ -10,14 +10,17 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins(
-                        "http://localhost:3000",  // App React (Parte D)
-                        "http://localhost:5173",  // Vite (si se usa)
-                        "http://localhost:5500",  // Live Server de VS Code
+                .allowedOriginPatterns(
+                        "https://*.vercel.app",                     // Acepta cualquier frontend desplegado en Vercel
+                        "https://socioclub-los-algarrobos-sitio-publ.vercel.app", // Tu sitio público
+                        "http://localhost:3000",                   // App React local
+                        "http://localhost:5173",                   // Vite
+                        "http://localhost:5500",                   // Live Server
                         "http://127.0.0.1:5500"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowCredentials(true)
+                .maxAge(3600); // Cachea la respuesta OPTIONS por 1 hora
     }
 }
