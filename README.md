@@ -1,23 +1,33 @@
-# SocioClub - Club Social y Deportivo Los Algarrobos
+# SocioClub — Club Social y Deportivo Los Algarrobos
 
-Trabajo Práctico Integrador · Taller de Construcción de Software · Universidad Siglo 21
+Sistema web integral de gestión de socios, actividades e inscripciones desarrollado para el **Trabajo Práctico Integrador** de _Taller de Construcción de Software_ (Universidad Siglo 21).
 
 ## Integrantes del Grupo
 
-- [Integrante 1] - Sitio Público (Parte A)
-- [Integrante 2] - Backend & Sistema Secretaría (Parte B y C)
-- [Integrante 3] - App "Mi Club" React & Pruebas (Parte D y E)
+- Agustín Torres
+- Pablo Torres
+- Flora Avalos
+- Valentino Castaldi
 
-## Estructura del Proyecto
+## Arquitectura y URLs Desplegadas
 
-- `/sitio-publico`: Sitio web para vecinos (HTML5, CSS3, JavaScript).
-- `/backend`: Backend monolítico en Spring Boot, JPA, MySQL, Thymeleaf y API REST.
-- `/app-socios`: SPA móvil en React para socios.
-- `/docs`: Documentación técnica, script SQL, colección Postman y Bitácora de IA.
+- **Sitio Público (`/sitio-publico`):** HTML5, CSS3 responsivo y JavaScript puro (`https://socioclub-los-algarrobos-sitio-publ.vercel.app`)
+- **Backend + Backoffice (`/backend`):** Spring Boot, Thymeleaf, Spring Data JPA, API REST y MySQL (`https://socioclub-los-algarrobos.onrender.com`)
+- **App de Socios (`/app-socios`):** React, React Router, Context API y Axios
 
-## Requisitos Previos
+---
 
-- Java 17 o superior
-- Maven 3.8+
-- Node.js 18+ y npm
-- MySQL Server 8.0+
+## Cómo levantar el proyecto localmente
+
+### 1. Base de Datos MySQL
+
+1. Crear una base de datos llamada `socioclub` en MySQL 8+.
+2. Ejecutar el script `backend/src/main/resources/data.sql` para cargar las 8 actividades reglamentarias, los 15 socios de prueba y las inscripciones iniciales.
+
+### 2. Backend (Spring Boot)
+
+1. Configurar las credenciales de MySQL en `backend/src/main/resources/application.properties`.
+2. Desde una terminal en `/backend`, ejecutar:
+   ```bash
+   ./mvnw spring-boot:run
+   ```

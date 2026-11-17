@@ -1,0 +1,139 @@
+{
+  "info": {
+    "name": "SocioClub - API REST (TPI Siglo 21)",
+    "description": "Colección de endpoints mínimos del Anexo A y pruebas de reglas de negocio RN1 a RN5.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://socioclub-los-algarrobos.onrender.com/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "Actividades",
+      "item": [
+        {
+          "name": "GET Listar todas las actividades (200)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actividades" }
+        },
+        {
+          "name": "GET Filtrar actividades por disciplina (200)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actividades?disciplina=Fútbol" }
+        },
+        {
+          "name": "GET Detalle de actividad existente (200)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actividades/1" }
+        },
+        {
+          "name": "GET Detalle de actividad inexistente (404)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/actividades/999" }
+        },
+        {
+          "name": "POST Crear nueva actividad (201)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Tenis de mesa\",\n  \"disciplina\": \"Tenis de mesa\",\n  \"profesor\": \"Carlos Méndez\",\n  \"dias\": \"Sáb\",\n  \"horario\": \"15:00\",\n  \"edadMinima\": 10,\n  \"edadMaxima\": 80,\n  \"cupoMaximo\": 12,\n  \"cuotaMensual\": 12000.00\n}"
+            },
+            "url": "{{baseUrl}}/actividades"
+          }
+        },
+        {
+          "name": "PUT Modificar actividad (200)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Fútbol infantil\",\n  \"disciplina\": \"Fútbol\",\n  \"profesor\": \"Diego Ferreyra\",\n  \"dias\": \"Lun y Mié\",\n  \"horario\": \"18:00\",\n  \"edadMinima\": 6,\n  \"edadMaxima\": 12,\n  \"cupoMaximo\": 40,\n  \"cuotaMensual\": 18500.00\n}"
+            },
+            "url": "{{baseUrl}}/actividades/1"
+          }
+        },
+        {
+          "name": "DELETE Eliminar actividad con inscriptos (409 Conflict)",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/actividades/1" }
+        },
+        {
+          "name": "DELETE Eliminar actividad sin inscriptos (204 No Content)",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/actividades/9" }
+        }
+      ]
+    },
+    {
+      "name": "Socios",
+      "item": [
+        {
+          "name": "GET Buscar socio por DNI válido (200)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/socios/dni/42345678" }
+        },
+        {
+          "name": "GET Buscar socio por DNI inexistente (404)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/socios/dni/99999999" }
+        },
+        {
+          "name": "GET Inscripciones activas de un socio (200)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/socios/5/inscripciones" }
+        }
+      ]
+    },
+    {
+      "name": "Inscripciones y Reglas de Negocio",
+      "item": [
+        {
+          "name": "POST Inscripción exitosa (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"socioId\": 3,\n  \"actividadId\": 3\n}" },
+            "url": "{{baseUrl}}/inscripciones"
+          }
+        },
+        {
+          "name": "POST Error RN2 - Inscripción duplicada (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"socioId\": 1,\n  \"actividadId\": 1\n}" },
+            "url": "{{baseUrl}}/inscripciones"
+          }
+        },
+        {
+          "name": "POST Error RN3 - Edad fuera de rango (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"socioId\": 12,\n  \"actividadId\": 1\n}" },
+            "url": "{{baseUrl}}/inscripciones"
+          }
+        },
+        {
+          "name": "POST Error RN4 - Socio MOROSO (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"socioId\": 14,\n  \"actividadId\": 7\n}" },
+            "url": "{{baseUrl}}/inscripciones"
+          }
+        },
+        {
+          "name": "POST Error RN5 - Máximo 3 actividades (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"socioId\": 5,\n  \"actividadId\": 4\n}" },
+            "url": "{{baseUrl}}/inscripciones"
+          }
+        },
+        {
+          "name": "PUT Baja lógica de inscripción (200 OK)",
+          "request": { "method": "PUT", "url": "{{baseUrl}}/inscripciones/12/baja" }
+        }
+      ]
+    }
+  ]
+}

@@ -1,126 +1,87 @@
-// Servicio que centraliza toda la comunicación de la app con el backend.
-//
-// Hito Semana 2: todavía no hay API, así que estas funciones trabajan con los
-// datos locales de mockData.js y devuelven promesas, igual que Axios.
-// Cuando la API REST esté lista, se cambia el cuerpo de cada función por la
-// llamada con Axios al endpoint indicado. Los componentes no cambian.
+import axios from 'axios';
 
-import { actividades, socios, inscripciones } from '../datos/mockData';
+// Apunta a Render en producción o a localhost:8080 si se define por variable de entorno
+const API_URL = process.env.REACT_APP_API_URL || 'https://socioclub-los-algarrobos.onrender.com/api';
 
-const DEMORA_MS = 300;
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-// Simula una respuesta exitosa del servidor.
-function responder(datos) {
-  return new Promise((resolve) => setTimeout(() => resolve(datos), DEMORA_MS));
-}
-
-// Simula un error del servidor (404 o 409) con el mensaje que devolvería la API.
-function rechazar(mensaje) {
-  return new Promise((resolve, reject) => setTimeout(() => reject(new Error(mensaje)), DEMORA_MS));
-}
-
-function contarInscriptosActivos(actividadId) {
-  return inscripciones.filter((i) => i.actividadId === actividadId && i.estado === 'ACTIVA').length;
-}
-
-// Agrega el cupo disponible a la actividad, como lo hace GET /api/actividades.
-function conCupoDisponible(actividad) {
-  return { ...actividad, cupoDisponible: actividad.cupoMaximo - contarInscriptosActivos(actividad.id) };
-}
-
-// Las fechas vienen como 'AAAA-MM-DD'. Se separan a mano para evitar
-// el corrimiento de un día que produce new Date() con la zona horaria.
-function calcularEdad(fechaNacimiento) {
-  const [anio, mes, dia] = fechaNacimiento.split('-').map(Number);
-  const hoy = new Date();
-  let edad = hoy.getFullYear() - anio;
-  const yaCumplio = hoy.getMonth() + 1 > mes || (hoy.getMonth() + 1 === mes && hoy.getDate() >= dia);
-  if (!yaCumplio) edad--;
-  return edad;
-}
-
-function fechaDeHoy() {
-  const hoy = new Date();
-  const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-  const dia = String(hoy.getDate()).padStart(2, '0');
-  return `${hoy.getFullYear()}-${mes}-${dia}`;
+// Helper para extraer el mensaje exacto del backend (409 Conflict, 404 Not Found, etc.)
+function extraerMensajeError(error, mensajePorDefecto) {
+  if (error.response && error.response.data) {
+    if (error.response.data.error) return error.response.data.error;
+    if (error.response.data.message) return error.response.data.message;
+  }
+  return mensajePorDefecto;
 }
 
 // GET /api/actividades
-export function obtenerActividades() {
-  return responder(actividades.map(conCupoDisponible));
+export async function obtenerActividades() {
+  try {
+    const response = await api.get('/actividades');
+    return response.data;
+  } catch (error) {
+    throw new Error(extraerMensajeError(error, 'Error al cargar las actividades'));
+  }
 }
 
 // GET /api/actividades/{id}
-export function obtenerActividad(id) {
-  const actividad = actividades.find((a) => a.id === id);
-  if (!actividad) return rechazar('No encontramos la actividad');
-  return responder(conCupoDisponible(actividad));
+export async function obtenerActividad(id) {
+  try {
+    const response = await api.get(`/actividades/${id}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      throw new Error('No encontramos la actividad');
+    }
+    throw new Error(extraerMensajeError(error, 'Error al obtener el detalle de la actividad'));
+  }
 }
 
 // GET /api/socios/dni/{dni}
-export function buscarSocioPorDni(dni) {
-  const socio = socios.find((s) => s.dni === dni);
-  if (!socio) return rechazar('No encontramos ningún socio con ese DNI');
-  return responder(socio);
+export async function buscarSocioPorDni(dni) {
+  try {
+    const response = await api.get(`/socios/dni/${dni}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      throw new Error('No encontramos ningún socio con ese DNI');
+    }
+    throw new Error(extraerMensajeError(error, 'Error al buscar el socio'));
+  }
 }
 
 // GET /api/socios/{id}/inscripciones
-export function obtenerInscripcionesActivas(socioId) {
-  const activas = inscripciones
-    .filter((i) => i.socioId === socioId && i.estado === 'ACTIVA')
-    .map((i) => ({
-      id: i.id,
-      fechaInscripcion: i.fechaInscripcion,
-      estado: i.estado,
-      actividad: actividades.find((a) => a.id === i.actividadId),
-    }));
-  return responder(activas);
+export async function obtenerInscripcionesActivas(socioId) {
+  try {
+    const response = await api.get(`/socios/${socioId}/inscripciones`);
+    return response.data;
+  } catch (error) {
+    throw new Error(extraerMensajeError(error, 'Error al cargar tus inscripciones'));
+  }
 }
 
-// POST /api/inscripciones  { socioId, actividadId }
-// En el sistema real las reglas RN1 a RN5 las valida InscripcionService en el
-// backend y la API responde 409 con el mensaje. Acá se imitan para poder
-// probar la pantalla antes de conectar la API.
-export function inscribir(socioId, actividadId) {
-  const socio = socios.find((s) => s.id === socioId);
-  const actividad = actividades.find((a) => a.id === actividadId);
-  if (!socio || !actividad) return rechazar('No encontramos el socio o la actividad');
-
-  const activasDelSocio = inscripciones.filter((i) => i.socioId === socioId && i.estado === 'ACTIVA');
-  const edad = calcularEdad(socio.fechaNacimiento);
-
-  if (contarInscriptosActivos(actividadId) >= actividad.cupoMaximo) {
-    return rechazar('La actividad no tiene cupo disponible');
+// POST /api/inscripciones { socioId, actividadId }
+export async function inscribir(socioId, actividadId) {
+  try {
+    const response = await api.post('/inscripciones', { socioId, actividadId });
+    return response.data;
+  } catch (error) {
+    // Si el backend devuelve 409 Conflict (RN1-RN5), lanza el mensaje exacto de la regla
+    throw new Error(extraerMensajeError(error, 'No se pudo completar la inscripción'));
   }
-  if (activasDelSocio.some((i) => i.actividadId === actividadId)) {
-    return rechazar('El socio ya está inscripto en esta actividad');
-  }
-  if (edad < actividad.edadMinima || edad > actividad.edadMaxima) {
-    return rechazar(`La edad permitida para esta actividad es de ${actividad.edadMinima} a ${actividad.edadMaxima} años`);
-  }
-  if (socio.estadoCuota === 'MOROSO') {
-    return rechazar('Debe regularizar su cuota en secretaría');
-  }
-  if (activasDelSocio.length >= 3) {
-    return rechazar('Alcanzó el máximo de 3 actividades');
-  }
-
-  const nueva = {
-    id: Math.max(...inscripciones.map((i) => i.id)) + 1,
-    socioId,
-    actividadId,
-    fechaInscripcion: fechaDeHoy(),
-    estado: 'ACTIVA',
-  };
-  inscripciones.push(nueva);
-  return responder(nueva);
 }
 
-// PUT /api/inscripciones/{id}/baja  (baja lógica: la inscripción queda en estado BAJA)
-export function darDeBaja(inscripcionId) {
-  const inscripcion = inscripciones.find((i) => i.id === inscripcionId);
-  if (!inscripcion) return rechazar('No encontramos la inscripción');
-  inscripcion.estado = 'BAJA';
-  return responder(inscripcion);
+// PUT /api/inscripciones/{id}/baja
+export async function darDeBaja(inscripcionId) {
+  try {
+    const response = await api.put(`/inscripciones/${inscripcionId}/baja`);
+    return response.data;
+  } catch (error) {
+    throw new Error(extraerMensajeError(error, 'Error al procesar la baja'));
+  }
 }
