@@ -3,6 +3,7 @@ package ar.edu.siglo21.backend.controller;
 import ar.edu.siglo21.backend.model.Actividad;
 import ar.edu.siglo21.backend.service.ActividadService;
 import ar.edu.siglo21.backend.service.InscripcionService;
+import ar.edu.siglo21.backend.service.ReglaNegocioException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -61,9 +62,20 @@ public class ActividadWebController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Actividad actividad, RedirectAttributes redirectAttributes) {
-        actividadService.guardar(actividad);
-        redirectAttributes.addFlashAttribute("exito", "Actividad guardada correctamente.");
+    public String guardar(@ModelAttribute Actividad actividad, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            if (actividad.getId() == null) {
+                actividadService.guardar(actividad);
+            } else {
+                actividadService.actualizar(actividad.getId(), actividad);
+            }
+            redirectAttributes.addFlashAttribute("exito", "Actividad guardada correctamente.");
+        } catch (ReglaNegocioException e) {
+            model.addAttribute("error", e.getMessage());
+            return "actividades/formulario";
+        } catch (NoSuchElementException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
         return "redirect:/actividades";
     }
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InscripcionService {
@@ -30,10 +31,11 @@ public class InscripcionService {
     @Transactional
     public Inscripcion inscribirSocio(Long socioId, Long actividadId) {
         // 1. Verificar existencia de entidades
+        Optional<Actividad> actividadEncontrada = actividadRepository.buscarPorIdParaModificar(actividadId);
         Socio socio = socioRepository.findById(socioId)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró el socio con ID: " + socioId));
 
-        Actividad actividad = actividadRepository.findById(actividadId)
+        Actividad actividad = actividadEncontrada
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró la actividad con ID: " + actividadId));
 
         // 2. Validación RN4: Cuota al día
