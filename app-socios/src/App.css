@@ -53,10 +53,15 @@
   line-height: 1.2;
 }
 
-/* Filtro por disciplina */
+/* Filtros de actividades */
 
 .filtros-actividades {
   margin-bottom: 40px;
+}
+
+.campo-filtro-edad {
+  margin-top: 16px;
+  max-width: 160px;
 }
 
 .campo-filtro,
@@ -72,6 +77,7 @@
 }
 
 .campo-filtro select,
+.campo-filtro input,
 .campo-formulario input {
   width: 100%;
   padding: 12px 14px;
@@ -86,6 +92,7 @@
 }
 
 .campo-filtro select:focus-visible,
+.campo-filtro input:focus-visible,
 .campo-formulario input:focus-visible {
   outline: 2px solid var(--color-principal);
   outline-offset: 2px;

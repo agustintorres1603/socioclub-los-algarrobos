@@ -3,6 +3,7 @@ package ar.edu.siglo21.backend.controller;
 import ar.edu.siglo21.backend.dto.ActividadResponse;
 import ar.edu.siglo21.backend.model.Actividad;
 import ar.edu.siglo21.backend.service.ActividadService;
+import ar.edu.siglo21.backend.service.ReglaNegocioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/actividades")
@@ -47,26 +49,21 @@ public class ActividadRestController {
 
     @PostMapping
     public ResponseEntity<Actividad> crear(@RequestBody Actividad actividad) {
+        actividad.setId(null);
         Actividad nueva = actividadService.guardar(actividad);
         return ResponseEntity.status(HttpStatus.CREATED).body(nueva);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Actividad> actualizar(@PathVariable Long id, @RequestBody Actividad actividadActualizada) {
-        return actividadService.buscarPorId(id)
-                .map(act -> {
-                    act.setNombre(actividadActualizada.getNombre());
-                    act.setDisciplina(actividadActualizada.getDisciplina());
-                    act.setProfesor(actividadActualizada.getProfesor());
-                    act.setDias(actividadActualizada.getDias());
-                    act.setHorario(actividadActualizada.getHorario());
-                    act.setEdadMinima(actividadActualizada.getEdadMinima());
-                    act.setEdadMaxima(actividadActualizada.getEdadMaxima());
-                    act.setCupoMaximo(actividadActualizada.getCupoMaximo());
-                    act.setCuotaMensual(actividadActualizada.getCuotaMensual());
-                    return ResponseEntity.ok(actividadService.guardar(act));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Actividad actividadActualizada) {
+        try {
+            return ResponseEntity.ok(actividadService.actualizar(id, actividadActualizada));
+        } catch (ReglaNegocioException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("error", e.getMessage(), "regla", e.getCodigoRegla()));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -76,8 +73,8 @@ public class ActividadRestController {
             return ResponseEntity.noContent().build(); // 204 No Content
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("error", e.getMessage())); // 409 Conflict si hay inscriptos
-        } catch (Exception e) {
+                    .body(Map.of("error", e.getMessage()));
+        } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }

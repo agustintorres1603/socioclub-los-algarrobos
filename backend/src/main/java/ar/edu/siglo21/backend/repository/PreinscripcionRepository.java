@@ -10,4 +10,6 @@ public interface PreinscripcionRepository extends JpaRepository<Preinscripcion, 
 
     // Permite consultar preinscripciones filtrando por actividad
     List<Preinscripcion> findByActividadId(Long actividadId);
+
+    boolean existsByActividadId(Long actividadId);
 }

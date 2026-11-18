@@ -5,6 +5,7 @@ import ar.edu.siglo21.backend.model.Preinscripcion;
 import ar.edu.siglo21.backend.repository.ActividadRepository;
 import ar.edu.siglo21.backend.repository.PreinscripcionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,8 +21,9 @@ public class PreinscripcionService {
         this.actividadRepository = actividadRepository;
     }
 
+    @Transactional
     public Preinscripcion registrar(String nombre, String apellido, String dni, String email, String telefono, Long actividadId) {
-        Actividad actividad = actividadRepository.findById(actividadId)
+        Actividad actividad = actividadRepository.buscarPorIdParaModificar(actividadId)
                 .orElseThrow(() -> new IllegalArgumentException("La actividad seleccionada no existe"));
 
         Preinscripcion preinscripcion = new Preinscripcion(nombre, apellido, dni, email, telefono, actividad);
