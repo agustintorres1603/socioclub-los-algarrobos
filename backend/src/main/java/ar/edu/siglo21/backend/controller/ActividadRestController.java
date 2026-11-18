@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/actividades")
@@ -77,7 +78,7 @@ public class ActividadRestController {
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("error", e.getMessage())); // 409 Conflict si hay inscriptos
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }

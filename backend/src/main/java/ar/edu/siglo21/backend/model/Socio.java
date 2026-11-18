@@ -13,6 +13,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "socio")
@@ -32,6 +33,7 @@ public class Socio {
     private String apellido;
 
     @Column(name = "fecha_nacimiento", nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate fechaNacimiento;
 
     @Column(nullable = false, length = 100)

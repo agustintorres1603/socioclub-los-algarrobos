@@ -6,6 +6,7 @@ import { obtenerActividades } from '../servicios/api';
 function ListaActividades() {
   const [actividades, setActividades] = useState([]);
   const [disciplina, setDisciplina] = useState('Todas');
+  const [edad, setEdad] = useState('');
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -28,10 +29,13 @@ function ListaActividades() {
   // Disciplinas sin repetir para armar las opciones del filtro.
   const disciplinas = [...new Set(actividades.map((actividad) => actividad.disciplina))];
 
-  const actividadesFiltradas =
-    disciplina === 'Todas'
-      ? actividades
-      : actividades.filter((actividad) => actividad.disciplina === disciplina);
+  const edadNumerica = Number(edad);
+  const edadValida = Number.isInteger(edadNumerica) && edadNumerica >= 0;
+  const actividadesFiltradas = actividades.filter((actividad) => {
+    const coincideDisciplina = disciplina === 'Todas' || actividad.disciplina === disciplina;
+    const coincideEdad = edad === '' || (edadNumerica >= actividad.edadMinima && edadNumerica <= actividad.edadMaxima);
+    return edadValida && coincideDisciplina && coincideEdad;
+  });
 
   function verDetalle(id) {
     navigate(`/actividades/${id}`);
@@ -64,8 +68,23 @@ function ListaActividades() {
             ))}
           </select>
         </div>
+        <div className="campo-filtro campo-filtro-edad">
+          <label htmlFor="filtro-edad">Edad</label>
+          <input
+            id="filtro-edad"
+            type="number"
+            min="0"
+            step="1"
+            value={edad}
+            onChange={(evento) => setEdad(evento.target.value)}
+          />
+        </div>
       </div>
 
+      {!edadValida && <p role="alert">Ingresá una edad válida, sin decimales.</p>}
+      {edadValida && actividadesFiltradas.length === 0 && (
+        <p role="status">No hay actividades que coincidan con los filtros.</p>
+      )}
       <div className="grilla-actividades">
         {actividadesFiltradas.map((actividad) => (
           <TarjetaActividad key={actividad.id} actividad={actividad} onVerDetalle={verDetalle} />

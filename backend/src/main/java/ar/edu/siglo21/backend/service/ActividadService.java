@@ -6,6 +6,7 @@ import ar.edu.siglo21.backend.repository.InscripcionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -39,11 +40,13 @@ public class ActividadService {
     }
 
     public void eliminar(Long id) {
+        Actividad actividad = actividadRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Actividad no encontrada"));
         long inscriptos = inscripcionRepository.contarInscriptosActivos(id);
         if (inscriptos > 0) {
             throw new IllegalStateException("No se puede eliminar una actividad con inscriptos activos");
         }
-        actividadRepository.deleteById(id);
+        actividadRepository.delete(actividad);
     }
 
     public long obtenerCupoDisponible(Long actividadId) {

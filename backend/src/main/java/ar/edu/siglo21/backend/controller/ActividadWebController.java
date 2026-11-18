@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/actividades")
@@ -71,7 +72,7 @@ public class ActividadWebController {
         try {
             actividadService.eliminar(id);
             redirectAttributes.addFlashAttribute("exito", "Actividad eliminada con éxito.");
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException | NoSuchElementException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/actividades";

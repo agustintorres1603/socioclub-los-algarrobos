@@ -12,7 +12,7 @@ INSERT INTO actividad (id, nombre, disciplina, profesor, dias, horario, edad_min
 (8, 'Yoga', 'Bienestar', 'Inés Arguello', 'Mar y Jue', '09:00', 16, 99, 15, 17000.00);
 
 -- ========================================================
--- 2. CARGA DE 15 SOCIOS DE PRUEBA (Edades variadas y 2 morosos)
+-- 2. CARGA DE 20 SOCIOS DE PRUEBA (Edades variadas y 2 morosos)
 -- ========================================================
 INSERT INTO socio (id, dni, nombre, apellido, fecha_nacimiento, email, telefono, estado_cuota) VALUES
 (1, '45123456', 'Lucas', 'Gómez', '2015-05-12', 'lucas.gomez@gmail.com', '3514001122', 'AL_DIA'),      -- ~11 años (apto fútbol/patín)
@@ -30,7 +30,13 @@ INSERT INTO socio (id, dni, nombre, apellido, fecha_nacimiento, email, telefono,
 (13, '52111333', 'Martina', 'Suárez', '2018-09-15', 'martina.s@gmail.com', '3514044455', 'AL_DIA'),   -- ~8 años (apta patín/natación/ajedrez)
 -- Socios MOROSOS obligatorios para probar regla RN4:
 (14, '36789123', 'Federico', 'Sosa', '1992-03-14', 'fede.sosa@gmail.com', '3514055566', 'MOROSO'),   -- MOROSO 1
-(15, '40555666', 'Florencia', 'Torres', '1997-11-28', 'flor.torres@gmail.com', '3514066677', 'MOROSO'); -- MOROSO 2
+(15, '40555666', 'Florencia', 'Torres', '1997-11-28', 'flor.torres@gmail.com', '3514066677', 'MOROSO'), -- MOROSO 2
+-- Socios elegibles para dejar Yoga a un lugar de su cupo máximo.
+(16, '87000016', 'Clara', 'Ríos', '1996-04-11', 'clara.rios@example.com', NULL, 'AL_DIA'),
+(17, '87000017', 'Nicolás', 'Luna', '1991-08-22', 'nicolas.luna@example.com', NULL, 'AL_DIA'),
+(18, '87000018', 'Laura', 'Vega', '1987-06-02', 'laura.vega@example.com', NULL, 'AL_DIA'),
+(19, '87000019', 'Daniel', 'Arias', '1983-02-18', 'daniel.arias@example.com', NULL, 'AL_DIA'),
+(20, '87000020', 'Paula', 'Molina', '1979-09-09', 'paula.molina@example.com', NULL, 'AL_DIA');
 
 -- ========================================================
 -- 3. INSCRIPCIONES INICIALES DE PRUEBA
@@ -50,7 +56,12 @@ INSERT INTO inscripcion (id, socio_id, actividad_id, fecha_inscripcion, estado) 
 (8, 9, 8, '2026-03-02', 'ACTIVA'),
 (9, 10, 8, '2026-03-02', 'ACTIVA'),
 (10, 11, 8, '2026-03-02', 'ACTIVA'),
-(11, 12, 8, '2026-03-02', 'ACTIVA');
+(11, 12, 8, '2026-03-02', 'ACTIVA'),
+(15, 16, 8, '2026-03-03', 'ACTIVA'),
+(16, 17, 8, '2026-03-03', 'ACTIVA'),
+(17, 18, 8, '2026-03-03', 'ACTIVA'),
+(18, 19, 8, '2026-03-03', 'ACTIVA'),
+(19, 20, 8, '2026-03-03', 'ACTIVA');
 
 -- Caso 3: Inscripciones sueltas para probar duplicados (RN2) y lista de socios
 INSERT INTO inscripcion (id, socio_id, actividad_id, fecha_inscripcion, estado) VALUES
